@@ -1,0 +1,124 @@
+commit dfaf4e4cce2153e3db71ac22832d0c88a5fbd2f3
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 18:05:32 2018 +0200
+
+    poisto&muutos
+
+ tiedostoja/file1.txt  | 0
+ tiedostoja/file2.txt  | 0
+ tiedostoja/file22.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 58ea43344480fb48e61ac552b43fc02ca386e061
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 18:00:08 2018 +0200
+
+    hakemisto&tiedostoja
+
+ tiedostoja/file1.txt | 0
+ tiedostoja/file2.txt | 0
+ tiedostoja/file3.txt | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit c01274d1c25f425e4a7d0a7021d72abafde84f78
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:54:49 2018 +0200
+
+    add -p
+
+ eka.txt    | 3 ++-
+ kolmas.txt | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit fde687447e248f21ac953b376f3ca539f713ccbc
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:52:25 2018 +0200
+
+    muutos valmis
+
+ tiedosto.txt | 11 -----------
+ 1 file changed, 11 deletions(-)
+
+commit cff5becd22ec44816c11b20b9389f3f5a281794f
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:51:53 2018 +0200
+
+    nimi muutettu
+
+ eka.txt | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+commit 89d9c02817322a7ef27c8dd3026a818ad7d956c8
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:50:37 2018 +0200
+
+    poisto
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 96e72e2b02f6f6c7e9a6b0fb54bd7dbc578e5ef5
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:05:58 2018 +0200
+
+    poisto ja lisäys
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 8c7df13d522dacb52d8904a48e301a2d87978953
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:04:41 2018 +0200
+
+    muutoksia tiedostoon
+
+ tiedosto.txt | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+commit 4efc43c4e9fdf0e2cffad6e09ac855613049b215
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:02:40 2018 +0200
+
+    stuff lisätty
+
+ stuff/jokin.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 35fbb83b41534a59833b4d930deadefae2b2b6b2
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:01:40 2018 +0200
+
+    muutoksia toiseen ja kolmanteen
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 294c6e30f8f0bbbfe2f8329149584a5087c794d9
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 17:00:40 2018 +0200
+
+    kolmas lisätty
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 58c5bdd1a68b50a23aff061d371f0ef20a24950c
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 16:59:03 2018 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 0ecf29be7c50b5e15507b70ecf2bdd96577696b4
+Author: Julia Grön <julia.gron@helsinki.fi>
+Date:   Wed Mar 14 16:57:22 2018 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
