@@ -12,4 +12,4 @@
 
 [tehtävät](https://github.com/juliagron/otm-harjoitustyo/tree/master/laskarit/viikko2)
 
-![jacoco-report](file:///home/juliagro/otm-harjoitustyo/laskarit/viikko2/jacoco_report.png)
+![jacoco-report](///home/juliagro/otm-harjoitustyo/laskarit/viikko2/jacoco_report.png)
