@@ -235,4 +235,23 @@ public class KassapaateTest {
         kassapaate.lataaRahaaKortille(kortti, 100);
         assertEquals(100100, kassapaate.kassassaRahaa());
     }
+    
+    @Test
+    public void ladataanKortilleNollaKortti() {
+        kassapaate.lataaRahaaKortille(kortti, 0);
+        assertEquals(1000, kortti.saldo());
+    }
+    
+    @Test
+    public void ladataanKortilleNollaKassa() {
+        kassapaate.lataaRahaaKortille(kortti, 0);
+        assertEquals(100000, kassapaate.kassassaRahaa());
+    }
+    
+    @Test
+    public void ladataanKortilleNegatiivista() {
+        kassapaate.lataaRahaaKortille(kortti, -100);
+        assertEquals(100000, kassapaate.kassassaRahaa());
+        assertEquals(1000, kortti.saldo());
+    }
 }
