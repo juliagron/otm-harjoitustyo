@@ -13,3 +13,7 @@
 [tehtävät](https://github.com/juliagron/otm-harjoitustyo/tree/master/laskarit/viikko2)
 
 ![jacoco-report](https://github.com/juliagron/otm-harjoitustyo/blob/master/laskarit/viikko2/jacoco_report.png)
+
+#### Harjoitustyö
+[Vaatimusmäärittely](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/vaatimusmaarittely.md)
+[Työaikakirjanpito](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
