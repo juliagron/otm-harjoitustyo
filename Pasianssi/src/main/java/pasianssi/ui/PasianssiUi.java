@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 
 
 /**
@@ -28,7 +29,7 @@ public class PasianssiUi extends Application {
         
         StackPane layout = new StackPane();
         
-        Scene scene = new Scene(layout, 850, 600);
+        Scene scene = new Scene(layout, 850, 600,Color.GREEN);
         primaryStage.setScene(scene);
         
         primaryStage.show();
