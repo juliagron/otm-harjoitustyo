@@ -47,7 +47,7 @@ public class CardTest {
     // public void hello() {}
     
     @Test
-    public void construktor(){
+    public void construktorSetsCorrectValues(){
         Card card = new Card(Value.EIGHT,Color.CLUBS);
         assertEquals("EIGHT", card.getValue().toString());
         assertEquals("CLUBS", card.getColor().toString());
