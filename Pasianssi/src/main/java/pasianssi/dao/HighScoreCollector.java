@@ -18,7 +18,7 @@ public class HighScoreCollector implements Collector<HighScore> {
 
     @Override
     public HighScore collect(ResultSet rs) throws SQLException {
-        return new HighScore(rs.getInt("id"),rs.getString("name"), rs.getString("time"));
+        return new HighScore(rs.getInt("id"), rs.getString("name"), rs.getString("time"));
     }
     
 }

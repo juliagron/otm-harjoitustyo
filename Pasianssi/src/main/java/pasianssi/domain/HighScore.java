@@ -15,33 +15,33 @@ public class HighScore {
     private String time;
     private Integer id;
     
-    public HighScore(Integer id, String name, String time){
+    public HighScore(Integer id, String name, String time) {
         this.name = name;
         this.time = time;
         this.id = id;
     }
     
-    public String getName(){
+    public String getName() {
         return this.name;
     }
     
-    public String getTime(){
+    public String getTime() {
         return this.time;
     }
     
-    public Integer getId(){
+    public Integer getId() {
         return this.id;
     }
     
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
     
-    public void setTime(String time){
+    public void setTime(String time) {
         this.time = time;
     }
     
-    public void setId(Integer id){
+    public void setId(Integer id) {
         this.id = id;
     }
 }

@@ -14,18 +14,18 @@ import java.sql.SQLException;
 import java.util.List;
 import pasianssi.domain.HighScore;
 
-public class HighScoreDao implements Dao<HighScore, Integer>{
+public class HighScoreDao implements Dao<HighScore, Integer> {
     
     private Database database;
     
-    public HighScoreDao(Database database){
+    public HighScoreDao(Database database) {
         this.database = database;
     }
 
     @Override
     public HighScore findOne(Integer key) throws SQLException {
         List<HighScore> score = this.database.queryAndCollect("SELECT * FROM HighScore WHERE id = ?", new HighScoreCollector(), key);
-        if(score.isEmpty()){
+        if (score.isEmpty()) {
             return null;
         }
         return score.get(0);
