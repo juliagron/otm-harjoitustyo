@@ -9,4 +9,4 @@ päivä | aika | mitä tein
 10.4 | 1.5 | käyttöliittymään aika
 |  | 1.5 | tietokantaa
 |  | 0.5 | testejä
-yht. |  |
+yht. | 7.5 |
