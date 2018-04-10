@@ -6,4 +6,7 @@ päivä | aika | mitä tein
 30.3 | 0.5 | JavaFX opettelua
 9.4 | 2 | lisää perehtymistä JavaFX:n
 |  | 0.5 | käyttöliittymän aloitus, luokka Card aloitus, testi luokalle Card
-yht. | 4 |
+10.4 | 1.5 | käyttöliittymään aika
+|  | 1.5 | tietokantaa
+|  | 0.5 | testejä
+yht. |  |
