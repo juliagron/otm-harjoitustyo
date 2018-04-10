@@ -18,28 +18,32 @@ public class HighScoreDao implements Dao<HighScore, Integer>{
     
     private Database database;
     
-    public HighScoreDao(Datebase database){
+    public HighScoreDao(Database database){
         this.database = database;
     }
 
     @Override
     public HighScore findOne(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<HighScore> score = this.database.queryAndCollect("SELECT * FROM HighScore WHERE id = ?", new HighScoreCollector(), key);
+        if(score.isEmpty()){
+            return null;
+        }
+        return score.get(0);
     }
 
     @Override
-    public void save(HighScore element) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void save(HighScore score) throws SQLException {
+        this.database.update("INSERT INTO HighScore (name, tima) VALUES(?,?)", score.getName(), score.getTime());
     }
 
     @Override
     public List<HighScore> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.database.queryAndCollect("SELECT * FROM HighScore", new HighScoreCollector());
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.database.update("DELETE FROM HighScore WHERE id = ?", key);
     }
     
 }
