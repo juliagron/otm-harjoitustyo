@@ -59,6 +59,13 @@ public class PasianssiUi extends Application {
         };
         
         timer.scheduleAtFixedRate(task, delay, step);
+        
+        HBox menu = new HBox();
+        menu.setBackground(new Background(new BackgroundFill(Color.GAINSBORO, CornerRadii.EMPTY,Insets.EMPTY)));
+        Text menuText = new Text("Menu");
+        menu.getChildren().add(menuText);
+        
+        borderPane.setTop(menu);
         borderPane.setBottom(timeBar);
         borderPane.setCenter(layout);
         
