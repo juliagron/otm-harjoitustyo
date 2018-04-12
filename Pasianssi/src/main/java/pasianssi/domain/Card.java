@@ -12,6 +12,7 @@ package pasianssi.domain;
 public class Card {
     private Value value;
     private Color color;
+    private boolean faceUp;
     
     public Card(Value value, Color color) {
         this.value = value;
@@ -42,5 +43,13 @@ public class Card {
         private Color(String str) {
             this.str = str;
         }
+    }
+    
+    public void setTheCardFaceUp(boolean faceUp){
+        this.faceUp = faceUp;
+    }
+    
+    public boolean isTheCardFaceUp(){
+        return faceUp;
     }
 }
