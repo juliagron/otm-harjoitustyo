@@ -45,11 +45,11 @@ public class Card {
         }
     }
     
-    public void setTheCardFaceUp(boolean faceUp){
+    public void setTheCardFaceUp(boolean faceUp) {
         this.faceUp = faceUp;
     }
     
-    public boolean isTheCardFaceUp(){
+    public boolean isTheCardFaceUp() {
         return faceUp;
     }
 }

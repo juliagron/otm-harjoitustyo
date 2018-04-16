@@ -28,35 +28,35 @@ public class CardStack {
     }
     
     public boolean isTheStackOnTheTable() {
-        if(x == 1) {
+        if (x == 1) {
             return true;
         } else {
             return false;
         }
     }
     
-    public boolean isTheStackTheDeck(){
-        if(x == 0 & y == 0) {
+    public boolean isTheStackTheDeck() {
+        if (x == 0 & y == 0) {
             return true;
         } else {
             return false;
         }
     }
     
-    public boolean isTheStackNextToTheDeck(){
-        if(x == 0 & y == 1) {
+    public boolean isTheStackNextToTheDeck() {
+        if (x == 0 & y == 1) {
             return true;
         } else {
             return false;
         }
     }
     
-    public boolean isTheStackOneOfTheEndStacks(){
-        if(x == 0 & y >= 3){
+    public boolean isTheStackOneOfTheEndStacks() {
+        if (x == 0 & y >= 3) {
             return true;
         } else {
-        return false;
-    }
+            return false;
+        }
     }
     
 }
