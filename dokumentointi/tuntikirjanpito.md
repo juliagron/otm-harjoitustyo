@@ -10,4 +10,7 @@ päivä | aika | mitä tein
 |  | 1.5 | tietokantaa
 |  | 0.5 | testejä
 12.4 | 0.5 | rakenteen suunnittelua
-yht. | 8 |
+16.4 | 1 | testejä
+|  | 1.5 | käyttöliittymän parantelua
+|  | 1.5 | sovelluslogiikkaa
+yht. | 12 |
