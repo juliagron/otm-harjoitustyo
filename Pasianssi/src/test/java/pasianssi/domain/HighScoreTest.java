@@ -18,8 +18,6 @@ import static org.junit.Assert.*;
  */
 public class HighScoreTest {
     
-    int id;
-    int id2;
     String name;
     String name2;
     String time;
@@ -39,13 +37,11 @@ public class HighScoreTest {
     
     @Before
     public void setUp() {
-        id = 1;
-        id2 = 2;
         name = "jack";
         name2 = "mary";
         time = "2:45";
         time2 = "1:30";
-        score = new HighScore(id, name, time);
+        score = new HighScore(name, time);
     }
     
     @After
@@ -60,17 +56,14 @@ public class HighScoreTest {
     
     @Test
     public void constructorSetsCorrectValues() {
-        assertTrue(score.getId() == id);
         assertEquals(name, score.getName());
         assertEquals(time, score.getTime());
     }
     
     @Test
     public void methodsSetSetCorrectValues() {
-        score.setId(id2);
         score.setName(name2);
         score.setTime(time2);
-        assertTrue(score.getId() == id2);
         assertEquals(name2, score.getName());
         assertEquals(time2, score.getTime());
     }
