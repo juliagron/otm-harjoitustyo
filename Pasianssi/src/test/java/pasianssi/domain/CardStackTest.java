@@ -64,8 +64,10 @@ public class CardStackTest {
     public void inTheStackTheDeck(){
         CardStack stack = new CardStack(0,0);
         CardStack stack2 = new CardStack(0,6);
+        CardStack stack3 = new CardStack(1,0);
         assertTrue(stack.isTheStackTheDeck());
         assertFalse(stack2.isTheStackTheDeck());
+        assertTrue(stack3.isTheStackTheDeck());
     }
     
     @Test
