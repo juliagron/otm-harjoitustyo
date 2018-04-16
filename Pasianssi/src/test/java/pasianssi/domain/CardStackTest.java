@@ -12,16 +12,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import pasianssi.domain.Card.Color;
-import pasianssi.domain.Card.Value;
-
 /**
  *
  * @author juliagro
  */
-public class CardTest {
+public class CardStackTest {
     
-    public CardTest() {
+    public CardStackTest() {
     }
     
     @BeforeClass
@@ -45,18 +42,4 @@ public class CardTest {
     //
     // @Test
     // public void hello() {}
-    
-    @Test
-    public void construktorSetsCorrectValues(){
-        Card card = new Card(Value.EIGHT,Color.CLUBS);
-        assertEquals("EIGHT", card.getValue().toString());
-        assertEquals("CLUBS", card.getColor().toString());
-    }
-    
-    @Test
-    public void settingTheCardFaceUp(){
-        Card card = new Card(Value.ACE, Color.DIAMONDS);
-        card.setTheCardFaceUp(true);
-        assertTrue(card.isTheCardFaceUp());
-    }
 }
