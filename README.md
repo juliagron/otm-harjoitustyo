@@ -22,7 +22,7 @@ Kattavuusrapporttia voi katsoa avaamalla selaimella tiedoston *target/site/jacoc
 
 ### Checkstyle
 
-Tiedostoon [checkstyle.xml] (https://github.com/juliagron/otm-harjoitustyo/blob/master/Pasianssi/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
+Tiedostoon [checkstyle.xml](https://github.com/juliagron/otm-harjoitustyo/blob/master/Pasianssi/checkstyle.xml) määrittelemät tarkistukset suoritetaan komennolla
 
     mvn jxr:jxr checkstyle:checkstyle
 
