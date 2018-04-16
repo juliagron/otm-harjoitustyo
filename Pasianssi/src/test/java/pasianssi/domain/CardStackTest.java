@@ -74,15 +74,19 @@ public class CardStackTest {
     public void inTheStackNextToTheDeck(){
         CardStack stack = new CardStack(0,1);
         CardStack stack2 = new CardStack(0,6);
+        CardStack stack3 = new CardStack(1,1);
         assertTrue(stack.isTheStackNextToTheDeck());
         assertFalse(stack2.isTheStackNextToTheDeck());
+        assertFalse(stack3.isTheStackNextToTheDeck());
     }
     
     @Test
     public void inTheStackOneOfTheEndStacks(){
         CardStack stack = new CardStack(0,5);
         CardStack stack2 = new CardStack(1,6);
+        CardStack stack3 = new CardStack(0,0);
         assertTrue(stack.isTheStackOneOfTheEndStacks());
         assertFalse(stack2.isTheStackOneOfTheEndStacks());
+        assertFalse(stack3.isTheStackOneOfTheEndStacks());
     }
 }
