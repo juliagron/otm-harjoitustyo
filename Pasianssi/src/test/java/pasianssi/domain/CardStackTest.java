@@ -42,4 +42,13 @@ public class CardStackTest {
     //
     // @Test
     // public void hello() {}
+    
+    @Test
+    public void constructorSetsCorrectLocation(){
+        CardStack stack = new CardStack(0,1);
+        int x = stack.getLocationX();
+        int y = stack.getLocationY();
+        assertEquals(0, x);
+        assertEquals(1, y);
+    }
 }
