@@ -11,6 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pasianssi.domain.Card.Color;
+import pasianssi.domain.Card.Value;
 
 /**
  *
@@ -88,5 +90,21 @@ public class CardStackTest {
         assertTrue(stack.isTheStackOneOfTheEndStacks());
         assertFalse(stack2.isTheStackOneOfTheEndStacks());
         assertFalse(stack3.isTheStackOneOfTheEndStacks());
+    }
+    
+    @Test
+    public void addingCardsToTheStack() {
+        CardStack stack = new CardStack(1,1);
+        stack.addCardToTheStack(new Card(Value.ACE, Color.CLUBS));
+        String string = stack.topCard();
+        assertEquals("Card [CLUBS ACE down]", string);
+    }
+    
+    @Test
+    public void sizeOfTheStack() {
+        CardStack stack = new CardStack(1,1);
+        stack.addCardToTheStack(new Card(Value.ACE, Color.CLUBS));
+        stack.addCardToTheStack(new Card(Value.EIGHT, Color.CLUBS));
+        assertEquals(2, stack.sizeOfTheStack());
     }
 }
