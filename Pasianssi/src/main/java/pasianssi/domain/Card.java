@@ -59,9 +59,9 @@ public class Card {
 
     public String toString() {
         if (this.isTheCardFaceUp()) {
-            return "Card [" + color + " " + value + " up ]";
+            return "Card [" + color + " " + value + " up]";
         } else {
-            return "Card [" + color + " " + value + " down ]";
+            return "Card [" + color + " " + value + " down]";
         }
     }
 

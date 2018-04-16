@@ -59,4 +59,20 @@ public class CardTest {
         card.setTheCardFaceUp(true);
         assertTrue(card.isTheCardFaceUp());
     }
+    
+    @Test
+    public void correctToString() {
+        Card card = new Card(Value.ACE, Color.CLUBS);
+        assertEquals("Card [CLUBS ACE down]", card.toString());
+        card.setTheCardFaceUp(true);
+        assertEquals("Card [CLUBS ACE up]", card.toString());
+    }
+    
+    @Test
+    public void correctStack() {
+        CardStack stack = new CardStack(1,1);
+        Card card = new Card(Value.ACE, Color.CLUBS);
+        card.setStack(stack);
+        assertEquals(stack, card.getStack());
+    }
 }
