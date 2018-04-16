@@ -9,4 +9,5 @@ päivä | aika | mitä tein
 10.4 | 1.5 | käyttöliittymään aika
 |  | 1.5 | tietokantaa
 |  | 0.5 | testejä
-yht. | 7.5 |
+12.4 | 0.5 | rakenteen suunnittelua
+yht. | 8 |
