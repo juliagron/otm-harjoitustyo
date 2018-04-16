@@ -67,7 +67,7 @@ public class CardStackTest {
         CardStack stack3 = new CardStack(1,0);
         assertTrue(stack.isTheStackTheDeck());
         assertFalse(stack2.isTheStackTheDeck());
-        assertTrue(stack3.isTheStackTheDeck());
+        assertFalse(stack3.isTheStackTheDeck());
     }
     
     @Test
