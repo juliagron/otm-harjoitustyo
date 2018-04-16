@@ -51,4 +51,28 @@ public class CardStackTest {
         assertEquals(0, x);
         assertEquals(1, y);
     }
+    
+    @Test
+    public void inTheStackOnTheTable(){
+        CardStack stack = new CardStack(1,5);
+        assertTrue(stack.isTheStackOnTheTable());
+    }
+    
+    @Test
+    public void inTheStackTheDeck(){
+        CardStack stack = new CardStack(0,0);
+        assertTrue(stack.isTheStackTheDeck());
+    }
+    
+    @Test
+    public void inTheStackNextToTheDeck(){
+        CardStack stack = new CardStack(0,1);
+        assertTrue(stack.isTheStackNextToTheDeck());
+    }
+    
+    @Test
+    public void inTheStackOneOfTheEndStacks(){
+        CardStack stack = new CardStack(0,5);
+        assertTrue(stack.isTheStackOneOfTheEndStacks());
+    }
 }
