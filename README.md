@@ -7,6 +7,8 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Työn tarkoituksena on 
 
 [Työaikakirjanpito](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/tuntikirjanpito.md)
 
+[Arkkitehtuuri](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
+
 ## Komentorivikomennot
 
 ### Testaus
