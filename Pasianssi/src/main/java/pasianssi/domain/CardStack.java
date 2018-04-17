@@ -68,8 +68,8 @@ public class CardStack {
         this.cards.add(card);
     }
     
-    public String topCard() {
-        return cards.get(cards.size() - 1).toString();
+    public Card topCard() {
+        return cards.get(cards.size() - 1);
     }
     
     public int sizeOfTheStack() {

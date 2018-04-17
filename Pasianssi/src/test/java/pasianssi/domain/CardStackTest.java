@@ -95,9 +95,10 @@ public class CardStackTest {
     @Test
     public void addingCardsToTheStack() {
         CardStack stack = new CardStack(1,1);
-        stack.addCardToTheStack(new Card(Value.ACE, Color.CLUBS));
-        String string = stack.topCard();
-        assertEquals("Card [CLUBS ACE down]", string);
+        Card card = new Card(Value.ACE, Color.CLUBS);
+        stack.addCardToTheStack(card);
+        Card card1 = stack.topCard();
+        assertEquals(card, card1);
     }
     
     @Test

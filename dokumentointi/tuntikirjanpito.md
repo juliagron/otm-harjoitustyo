@@ -13,4 +13,7 @@ päivä | aika | mitä tein
 16.4 | 1 | testejä
 |  | 1.5 | käyttöliittymän parantelua
 |  | 1.5 | sovelluslogiikkaa
-yht. | 12 |
+17.4 | 1 | arkkitehtuurikuvaus
+|  | 1 | logiikkaa
+|  | 1 | testejä
+yht. | 15 |

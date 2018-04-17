@@ -19,6 +19,7 @@ public class Card {
     public Card(Value value, Color color) {
         this.value = value;
         this.color = color;
+        this.faceUp = false;
     }
 
     public Color getColor() {
