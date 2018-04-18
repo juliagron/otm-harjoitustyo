@@ -16,4 +16,6 @@ päivä | aika | mitä tein
 17.4 | 1 | arkkitehtuurikuvaus
 |  | 1 | logiikkaa
 |  | 1 | testejä
-yht. | 15 |
+18.4 | 1 | testejä 
+|  | 3 | JavaFX:n opettelua ja kokeilua testausprojektissa
+yht. | 19 |
