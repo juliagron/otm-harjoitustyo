@@ -58,8 +58,8 @@ public class StartingSituation {
         int i = y + 1;
         int j = 0;
         while (j < i) {
-            stack.addCardToTheStack(all.get(52 - 1 - j));
-            usable.remove(52 - 1 - j);
+            stack.addCardToTheStack(all.get(all.size() - 1 - j));
+            usable.remove(all.size() - 1 - j);
             j++;
         }
     }

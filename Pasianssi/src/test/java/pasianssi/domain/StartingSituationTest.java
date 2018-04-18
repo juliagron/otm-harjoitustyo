@@ -5,6 +5,7 @@
  */
 package pasianssi.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -76,5 +77,13 @@ public class StartingSituationTest {
     //
     // @Test
     // public void hello() {}
+    
+    @Test
+    public void gettingListOfCards() {
+        List<Card> testcard = new ArrayList();
+        testcard = situation.getListOfAllCards();
+        assertEquals(52, testcard.size());
+    }
+    
     
 }
