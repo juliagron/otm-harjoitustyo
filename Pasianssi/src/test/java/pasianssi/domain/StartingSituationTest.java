@@ -76,20 +76,5 @@ public class StartingSituationTest {
     //
     // @Test
     // public void hello() {}
-    @Test
-    public void suffleSuffles() {
-        situation.suffle();
-        List<Card> storage = situation.getListOfAllCards();
-        int i = 0;
-        for (int j = 0; j < cards.size(); j++) {
-            if (cards.get(i) == storage.get(i)) {
-                i++;
-            }
-        }
-        boolean value = true;
-        if (i == 52) {
-            value = false;
-        }
-        assertFalse(value);
-    }
+    
 }

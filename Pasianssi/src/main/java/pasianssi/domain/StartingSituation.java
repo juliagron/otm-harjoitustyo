@@ -43,10 +43,6 @@ public class StartingSituation {
         }
     }
 
-    public void suffle() {
-        Collections.shuffle(all);
-    }
-
     public void cardsOnTheStack() {
         for (CardStack stack : stacks) {
             if (stack.getLocationX() == 1) {
@@ -77,7 +73,7 @@ public class StartingSituation {
     }
 
     public void newDeal() {
-        suffle();
+        Collections.shuffle(all);
         sameDeal();
     }
     
