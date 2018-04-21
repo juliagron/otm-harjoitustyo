@@ -16,7 +16,6 @@ import pasianssi.domain.Card.Value;
  * @author juliagro
  */
 public class StartingSituation {
-
     private List<CardStack> stacks = new ArrayList();
     private List<Card> all = new ArrayList();
     private List<Card> usable = new ArrayList();

@@ -41,12 +41,20 @@ public class Card {
     }
 
     public enum Color {
-        CLUBS("risti"), SPADES("pata"), HEART("hertta"), DIAMONDS("ruutu");
+        CLUBS("♣"), SPADES("♠"), HEART("♥"), DIAMONDS("♦");
 
         public String str;
 
         private Color(String str) {
             this.str = str;
+        }
+        
+        public boolean isBlack() {
+            if (this == CLUBS || this == SPADES) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
