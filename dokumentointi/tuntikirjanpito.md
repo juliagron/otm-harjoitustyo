@@ -19,4 +19,5 @@ päivä | aika | mitä tein
 18.4 | 1 | testejä 
 |  | 3 | JavaFX:n opettelua ja kokeilua testausprojektissa
 21.4 | 4 | epäonnistunutta käyttöliittymän kokeilua testausprojektissa
-yht. | 23 |
+23.4 | 4 | logiikan parantelua ja käyttöliittymän grafiikoita
+yht. | 27 |
