@@ -21,5 +21,5 @@ päivä | aika | mitä tein
 21.4 | 4 | epäonnistunutta käyttöliittymän kokeilua testausprojektissa
 23.4 | 4 | logiikan parantelua ja käyttöliittymän grafiikoita
 |  | 0.5 | testejä
-|  | 1 | käyttöliittymän klikkausominaisuuksia
+|  | 1 | käyttöliittymän klikkausominaisuuksia testiprojektissa
 yht. | 28.5 |
