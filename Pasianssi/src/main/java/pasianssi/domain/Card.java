@@ -5,6 +5,8 @@
  */
 package pasianssi.domain;
 
+import javafx.scene.Group;
+
 /**
  *
  * @author juliagro
@@ -15,6 +17,11 @@ public class Card {
     private Color color;
     private boolean faceUp;
     private CardStack stack;
+    private CardGroup group;
+    
+    private Card() {
+        new CardGroup(this);
+    }
 
     public Card(Value value, Color color) {
         this.value = value;
@@ -80,5 +87,31 @@ public class Card {
 
     public CardStack getStack() {
         return stack;
+    }
+    
+    public static class CardGroup extends Group {
+        
+        private Card card;
+        
+        public CardGroup(Card card){
+            this.card = card;
+            card.setGroup(this);
+        }
+        
+        public Card getCard() {
+            return card;
+        }
+        
+        public void setCard(Card card) {
+            this.card = card;
+        }
+    }
+    
+    public CardGroup getGroup() {
+        return this.group;
+    }
+    
+    public void setGroup(CardGroup group) {
+        this.group = group;
     }
 }

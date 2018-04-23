@@ -7,6 +7,7 @@ package pasianssi.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.Group;
 
 /**
  *
@@ -17,6 +18,8 @@ public class CardStack {
     private int x;
     private int y;
     private List<Card> cards;
+    private Group group;
+    private Group bigGroup;
 
     public CardStack(int x, int y) {
         this.x = x;
@@ -66,6 +69,7 @@ public class CardStack {
 
     public void addCardToTheStack(Card card) {
         this.cards.add(card);
+        card.setStack(this);
     }
     
     public Card topCard() {
@@ -82,5 +86,21 @@ public class CardStack {
     
     public void emptyStack() {
         cards.clear();
+    }
+    
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+    
+    public void setBigGroup(Group group) {
+        this.bigGroup = group;
+    }
+    
+    public Group getBigGroup() {
+        return bigGroup;
     }
 }

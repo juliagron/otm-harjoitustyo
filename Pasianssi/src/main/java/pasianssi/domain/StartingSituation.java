@@ -45,7 +45,7 @@ public class StartingSituation {
     public void cardsOnTheStack() {
         for (CardStack stack : stacks) {
             if (stack.getLocationY() == 1) {
-                howManyCards(stack.getLocationY(), stack);
+                howManyCards(stack.getLocationX(), stack);
             }
         }
         for (Card card: usable) {
@@ -57,8 +57,8 @@ public class StartingSituation {
         int i = x + 1;
         int j = 0;
         while (j < i) {
-            stack.addCardToTheStack(all.get(all.size() - 1));
-            usable.remove(all.size() - 1);
+            stack.addCardToTheStack(all.get(usable.size() - 1));
+            usable.remove(usable.size() - 1);
             j++;
         }
     }
