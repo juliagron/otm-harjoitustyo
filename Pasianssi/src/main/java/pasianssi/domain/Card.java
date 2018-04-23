@@ -41,7 +41,7 @@ public class Card {
     }
 
     public enum Color {
-        CLUBS("♣"), SPADES("♠"), HEART("♥"), DIAMONDS("♦");
+        CLUBS("♣"), SPADES("♠"), HEARTS("♥"), DIAMONDS("♦");
 
         public String str;
 

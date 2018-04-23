@@ -44,7 +44,7 @@ public class StartingSituation {
 
     public void cardsOnTheStack() {
         for (CardStack stack : stacks) {
-            if (stack.getLocationX() == 1) {
+            if (stack.getLocationY() == 1) {
                 howManyCards(stack.getLocationY(), stack);
             }
         }
@@ -53,19 +53,19 @@ public class StartingSituation {
         }
     }
 
-    public void howManyCards(int y, CardStack stack) {
-        int i = y + 1;
+    public void howManyCards(int x, CardStack stack) {
+        int i = x + 1;
         int j = 0;
         while (j < i) {
-            stack.addCardToTheStack(all.get(all.size() - 1 - j));
-            usable.remove(all.size() - 1 - j);
+            stack.addCardToTheStack(all.get(all.size() - 1));
+            usable.remove(all.size() - 1);
             j++;
         }
     }
     
     public void turnFaceUp() {
         for (CardStack stack: stacks) {
-            if (stack.getLocationX() == 1) {
+            if (stack.getLocationY() == 1) {
                 stack.topCard().setTheCardFaceUp(true);
             }
         }
@@ -77,7 +77,14 @@ public class StartingSituation {
     }
     
     public void sameDeal() {
-        usable = all;
+        usable.clear();
+        for(CardStack stack: stacks) {
+            stack.emptyStack();
+        }
+        for(Card card: all) {
+            card.setTheCardFaceUp(false);
+        }
+        usable.addAll(all);
         cardsOnTheStack();
         turnFaceUp();
     }

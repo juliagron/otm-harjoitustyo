@@ -33,7 +33,7 @@ public class CardStack {
     }
 
     public boolean isTheStackOnTheTable() {
-        if (x == 1) {
+        if (y == 1) {
             return true;
         } else {
             return false;
@@ -49,7 +49,7 @@ public class CardStack {
     }
 
     public boolean isTheStackNextToTheDeck() {
-        if (x == 0 & y == 1) {
+        if (x == 1 & y == 0) {
             return true;
         } else {
             return false;
@@ -57,7 +57,7 @@ public class CardStack {
     }
 
     public boolean isTheStackOneOfTheEndStacks() {
-        if (x == 0 & y >= 3) {
+        if (y == 0 & x >= 3) {
             return true;
         } else {
             return false;
@@ -74,5 +74,13 @@ public class CardStack {
     
     public int sizeOfTheStack() {
         return cards.size();
+    }
+    
+    public List<Card> cards() {
+        return cards;
+    }
+    
+    public void emptyStack() {
+        cards.clear();
     }
 }
