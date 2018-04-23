@@ -93,7 +93,7 @@ public class Card {
         
         private Card card;
         
-        public CardGroup(Card card){
+        public CardGroup(Card card) {
             this.card = card;
             card.setGroup(this);
         }

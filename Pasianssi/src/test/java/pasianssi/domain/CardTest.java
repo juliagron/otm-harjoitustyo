@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import pasianssi.domain.Card.CardGroup;
 
 import pasianssi.domain.Card.Color;
 import pasianssi.domain.Card.Value;
@@ -74,5 +75,29 @@ public class CardTest {
         Card card = new Card(Value.ACE, Color.CLUBS);
         card.setStack(stack);
         assertEquals(stack, card.getStack());
+    }
+    
+    @Test
+    public void isTheCardBlack() {
+        Card card = new Card(Value.ACE, Color.CLUBS);
+        Card sec = new Card(Value.ACE,Color.DIAMONDS);
+        Card thi = new Card(Value.ACE, Color.SPADES);
+        assertTrue(card.getColor().isBlack());
+        assertFalse(sec.getColor().isBlack());
+        assertTrue(thi.getColor().isBlack());
+    }
+    
+    @Test
+    public void cardGroup() {
+        Card card = new Card(Value.ACE, Color.CLUBS);
+        Card sec = new Card(Value.ACE,Color.DIAMONDS);
+        CardGroup group = new CardGroup(card);
+        CardGroup secGroup = new CardGroup(sec);
+        assertEquals(card, group.getCard());
+        group.setCard(sec);
+        assertEquals(sec, group.getCard());
+        assertEquals(secGroup, sec.getGroup());
+        sec.setGroup(group);
+        assertEquals(group, sec.getGroup());
     }
 }

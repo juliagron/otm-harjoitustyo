@@ -16,6 +16,7 @@ import pasianssi.domain.Card.Value;
  * @author juliagro
  */
 public class StartingSituation {
+
     private List<CardStack> stacks = new ArrayList();
     private List<Card> all = new ArrayList();
     private List<Card> usable = new ArrayList();
@@ -48,7 +49,7 @@ public class StartingSituation {
                 howManyCards(stack.getLocationX(), stack);
             }
         }
-        for (Card card: usable) {
+        for (Card card : usable) {
             stacks.get(0).addCardToTheStack(card);
         }
     }
@@ -62,9 +63,9 @@ public class StartingSituation {
             j++;
         }
     }
-    
+
     public void turnFaceUp() {
-        for (CardStack stack: stacks) {
+        for (CardStack stack : stacks) {
             if (stack.getLocationY() == 1) {
                 stack.topCard().setTheCardFaceUp(true);
             }
@@ -75,24 +76,24 @@ public class StartingSituation {
         Collections.shuffle(all);
         sameDeal();
     }
-    
+
     public void sameDeal() {
         usable.clear();
-        for(CardStack stack: stacks) {
+        for (CardStack stack : stacks) {
             stack.emptyStack();
         }
-        for(Card card: all) {
+        for (Card card : all) {
             card.setTheCardFaceUp(false);
         }
         usable.addAll(all);
         cardsOnTheStack();
         turnFaceUp();
     }
-    
+
     public List<Card> getListOfAllCards() {
         return all;
     }
-    
+
     public List<CardStack> getListOfAllStacks() {
         return stacks;
     }
