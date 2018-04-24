@@ -69,6 +69,7 @@ public class PasianssiUi extends Application {
     private final CardStack table7 = new CardStack(6, 1);
     private List<CardStack> stacks = new ArrayList();
     private final StartingSituation situation = new StartingSituation(deck, waste, endStack1, endStack2, endStack3, endStack4, table1, table2, table3, table4, table5, table6, table7);
+    int drawing = 1;
     
     public static void main(String[] args){
         launch(args);
@@ -76,12 +77,12 @@ public class PasianssiUi extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception{
-        newGame(primaryStage);
+        situation.newDeal();
+        game(primaryStage);
         
     }
     
-    public void newGame(Stage primaryStage) {
-        situation.newDeal();
+    public void game(Stage primaryStage) {
         primaryStage.setTitle("Solitaire");
 
         BorderPane borderPane = new BorderPane();
@@ -105,65 +106,39 @@ public class PasianssiUi extends Application {
 
         MenuBar menu = new MenuBar();
         Menu game = new Menu("Game");
+        Menu draw = new Menu("Draw");
         MenuItem menuNew = new MenuItem("New Deal");
         MenuItem menuQuit = new MenuItem("Quit");
         MenuItem menuSame = new MenuItem("Same Deal");
+        MenuItem drawOne = new MenuItem("Draw one");
+        MenuItem drawThree = new MenuItem("Draw three");
+        drawOne.setOnAction(e -> drawing = 1);
+        drawThree.setOnAction(e -> drawing = 3);
         menuQuit.setOnAction(e -> Platform.exit());
         menuNew.setOnAction(e -> restartNew(primaryStage, borderPane));
         menuSame.setOnAction(e -> restartSame(primaryStage, borderPane));
 
         game.getItems().addAll(menuNew, menuSame, menuQuit);
-        menu.getMenus().add(game);
+        draw.getItems().addAll(drawOne, drawThree);
+        menu.getMenus().addAll(game, draw);
 
         borderPane.setTop(menu);
         borderPane.setBottom(timeBar);
-        borderPane.setCenter(drawStartingSituation());
 
-        Scene scene = new Scene(borderPane, WINWIDTH, WINHEIGHT);
+        Group group = new Group();
+        drawStartingSituation(group);
+        borderPane.setCenter(group);
 
-        primaryStage.setScene(scene);
-
-        primaryStage.show();
-    }
-    
-    public void sameGame(Stage primaryStage) {
-        situation.sameDeal();
-        primaryStage.setTitle("Solitaire");
-
-        BorderPane borderPane = new BorderPane();
-        borderPane.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-        HBox timeBar = new HBox();
-        timeBar.setBackground(new Background(new BackgroundFill(Color.GAINSBORO, CornerRadii.EMPTY, Insets.EMPTY)));
-        Text timeText = new Text("Time: ");
-        timeBar.getChildren().add(timeText);
-
-        timer = new Timer();
-        TimerTask task = new TimerTask() {
-            public void run() {
-                seconds++;
-                int min = seconds / 60;
-                int sec = seconds % 60;
-                timeText.setText("Time: Minutes: " + min + " Seconds: " + sec);
-            }
-        };
-
-        timer.scheduleAtFixedRate(task, delay, step);
-
-        MenuBar menu = new MenuBar();
-        Menu game = new Menu("Game");
-        MenuItem menuNew = new MenuItem("New Deal");
-        MenuItem menuQuit = new MenuItem("Quit");
-        MenuItem menuSame = new MenuItem("Same Deal");
-        menuQuit.setOnAction(e -> Platform.exit());
-        menuNew.setOnAction(e -> restartNew(primaryStage, borderPane));
-        menuSame.setOnAction(e -> restartSame(primaryStage, borderPane));
-
-        game.getItems().addAll(menuNew, menuSame, menuQuit);
-        menu.getMenus().add(game);
-
-        borderPane.setTop(menu);
-        borderPane.setBottom(timeBar);
-        borderPane.setCenter(drawStartingSituation());
+        Rectangle r = new Rectangle();
+        double locx = (1 + stacks.get(0).getLocationX()) * SEPARATION + stacks.get(0).getLocationX() * WIDTH;
+        double locy = (1 + stacks.get(0).getLocationY()) * SEPARATION + stacks.get(0).getLocationY() * HEIGHT;
+        r.setX(locx);
+        r.setY(locy);
+        r.setHeight(HEIGHT);
+        r.setWidth(WIDTH);
+        r.setFill(Color.TRANSPARENT);
+        r.setOnMouseClicked(e -> clickingTheDeck());
+        group.getChildren().add(r);
 
         Scene scene = new Scene(borderPane, WINWIDTH, WINHEIGHT);
 
@@ -174,12 +149,14 @@ public class PasianssiUi extends Application {
     
     public void restartNew(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
-        newGame(stage);
+        situation.newDeal();
+        game(stage);
     }
 
     public void restartSame(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
-        sameGame(stage);
+        situation.sameDeal();
+        game(stage);
     }
     
     public void cleanup(BorderPane borderPane) {
@@ -189,20 +166,34 @@ public class PasianssiUi extends Application {
         seconds = 0;
     }
     
-    public Group drawStartingSituation() {
-        Group group = new Group();
+    public void drawStartingSituation(Group group) {
         stacks = situation.getListOfAllStacks();
         for (CardStack stack : stacks) {
             drawStack(group, stack);
         }
-        return group;
     }
     
     public void drawCard(Card card) {
         Rectangle rec = new Rectangle();
         CardGroup group = new CardGroup(card);
         if (card.getStack().getLocationY() == 0) {
-            group.setLayoutY(0);
+            if (card.getStack().getLocationX() == 1) {
+                if (drawing == 1) {
+                    group.setLayoutX(0);
+                    group.setLayoutY(0);
+                } else if (drawing == 3) {
+                    group.setLayoutY(0);
+                    if (card.getStack().cards().indexOf(card) % 3 == 0) {
+                        group.setLayoutX(0);
+                    } else if (card.getStack().cards().indexOf(card) % 3 == 1) {
+                        group.setLayoutX(SEPARATION / 2);
+                    } else if (card.getStack().cards().indexOf(card) % 3 == 2) {
+                        group.setLayoutX(SEPARATION);
+                    }
+                }
+            } else {
+                group.setLayoutY(0);
+            }
         } else if (card.getStack().sizeOfTheStack() == 0) {
             group.setLayoutY(0);
         } else {
@@ -279,6 +270,71 @@ public class PasianssiUi extends Application {
             }
         }
         group.getChildren().add(group1);
+
+    }
+    
+    public void reDrawStack(CardStack stack) {
+        Group group = stack.getGroup();
+        if (stack.isTheStackOnTheTable() && !"1".equals(stack.sizeOfTheStack())) {
+            if (!stack.topCard().isTheCardFaceUp()) {
+                stack.topCard().setTheCardFaceUp(true);
+            }
+        }
+
+        group.getChildren().clear();
+        Group bigGroup = stack.getBigGroup();
+        group.toBack();
+        bigGroup.getChildren().removeAll(group);
+        stack.setGroup(new Group());
+        drawStack(bigGroup, stack);
+        stack.getGroup().toBack();
+    }
+    
+    public void clickingTheDeck() {
+        if (stacks.get(0).sizeOfTheStack() == 0) {
+            //return all the cards to the deck
+            List<Card> copy = new ArrayList();
+            copy.addAll(stacks.get(1).cards());
+            for (int i = copy.size()-1; i >= 0; i--) {
+                copy.get(i).setTheCardFaceUp(false);
+                stacks.get(1).cards().remove(copy.get(i));
+                stacks.get(0).cards().add(copy.get(i));
+            }
+        } else if (drawing == 1) {
+            //draw 1
+            Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
+            c.getGroup().getChildren().clear();
+            stacks.get(0).cards().remove(c);
+            c.setTheCardFaceUp(true);
+            new CardGroup(c);
+            stacks.get(1).cards().add(c);
+            c.setStack(stacks.get(1));
+        } else if (drawing == 3) {
+            //draw 3
+            Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
+            Card ca = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 2);
+            Card car = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 3);
+            c.getGroup().getChildren().clear();
+            ca.getGroup().getChildren().clear();
+            car.getGroup().getChildren().clear();
+            stacks.get(0).cards().remove(c);
+            stacks.get(0).cards().remove(ca);
+            stacks.get(0).cards().remove(car);
+            c.setTheCardFaceUp(true);
+            ca.setTheCardFaceUp(true);
+            car.setTheCardFaceUp(true);
+            new CardGroup(c);
+            new CardGroup(ca);
+            new CardGroup(car);
+            stacks.get(1).cards().add(c);
+            stacks.get(1).cards().add(ca);
+            stacks.get(1).cards().add(car);
+            c.setStack(stacks.get(1));
+            ca.setStack(stacks.get(1));
+            car.setStack(stacks.get(1));
+        }
+        reDrawStack(stacks.get(0));
+        reDrawStack(stacks.get(1));
 
     }
     
