@@ -22,4 +22,6 @@ päivä | aika | mitä tein
 23.4 | 4 | logiikan parantelua ja käyttöliittymän grafiikoita
 |  | 0.5 | testejä
 |  | 1 | käyttöliittymän klikkausominaisuuksia testiprojektissa
-yht. | 28.5 |
+24.4 | 1 | käyttöliittymää
+|  | 1 | arkkitehtuurikuvaus
+yht. | 30.5 |
