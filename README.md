@@ -9,6 +9,10 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Työn tarkoituksena on 
 
 [Arkkitehtuuri](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
+## Releaset
+
+[Viikko 5](https://github.com/juliagron/otm-harjoitustyo/releases/tag/viikko5)
+
 ## Komentorivikomennot
 
 ### Testaus
@@ -21,6 +25,14 @@ Testikattavuusraportti luodaan komennolla
     mvn test jacoco:report
 
 Kattavuusrapporttia voi katsoa avaamalla selaimella tiedoston *target/site/jacoco/index.html*
+
+### Suoritettavan jarin generointi
+
+Komento
+
+    mvn package
+
+generoi hakemistoon *target* suoritettavan jar-tiedoston *Pasianssi-1.0-SNAPSHOT.jar*
 
 ### Checkstyle
 
