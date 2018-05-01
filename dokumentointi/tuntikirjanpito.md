@@ -26,4 +26,5 @@ päivä | aika | mitä tein
 |  | 1 | arkkitehtuurikuvaus
 1.5 | 1 | javadocin aloitus
 |  | 0.5 | alustava käyttöohje
-yht. | 32 |
+|  | 1 | testejä
+yht. | 33 |
