@@ -16,7 +16,7 @@ import pasianssi.domain.HighScore;
 
 public class HighScoreDao implements Dao<HighScore, Integer> {
     
-    private Database database;
+    private final Database database;
     
     public HighScoreDao(Database database) {
         this.database = database;

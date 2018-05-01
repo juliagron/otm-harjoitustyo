@@ -24,4 +24,5 @@ päivä | aika | mitä tein
 |  | 1 | käyttöliittymän klikkausominaisuuksia testiprojektissa
 24.4 | 1 | käyttöliittymää
 |  | 1 | arkkitehtuurikuvaus
-yht. | 30.5 |
+1.5 | 1 | javadocin aloitus
+yht. | 31.5 |

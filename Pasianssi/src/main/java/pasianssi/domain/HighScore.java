@@ -6,7 +6,7 @@
 package pasianssi.domain;
 
 /**
- *
+ * Luokka, joka määrittää käyttäjän tekemän tuloksen
  * @author juliagro
  */
 public class HighScore {

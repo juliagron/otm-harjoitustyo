@@ -16,7 +16,7 @@ import java.util.*;
 
 public class Database {
     
-    private Connection connection;
+    private final Connection connection;
 
     public Database(String address) throws Exception {
         this.connection = DriverManager.getConnection(address);
@@ -24,32 +24,27 @@ public class Database {
 
     public <T> List<T> queryAndCollect(String query, Collector<T> col, Object... params) throws SQLException {
         List<T> rivit = new ArrayList<>();
-        PreparedStatement stmt = connection.prepareStatement(query);
-        for (int i = 0; i < params.length; i++) {
-            stmt.setObject(i + 1, params[i]);
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }
+            
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    rivit.add(col.collect(rs));
+                }
+            }
         }
-
-        ResultSet rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            rivit.add(col.collect(rs));
-        }
-
-        rs.close();
-        stmt.close();
         return rivit;
     }
 
     public int update(String updateQuery, Object... params) throws SQLException {
-        PreparedStatement stmt = connection.prepareStatement(updateQuery);
-
-        for (int i = 0; i < params.length; i++) {
-            stmt.setObject(i + 1, params[i]);
+        int changes;
+        try (PreparedStatement stmt = connection.prepareStatement(updateQuery)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setObject(i + 1, params[i]);
+            }   changes = stmt.executeUpdate();
         }
-        
-        int changes = stmt.executeUpdate();
-        
-        stmt.close();
         
         
         return changes;

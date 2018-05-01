@@ -8,6 +8,7 @@ package pasianssi.domain;
 import javafx.scene.Group;
 
 /**
+ * Luokka, joka määrittelee kortin
  *
  * @author juliagro
  */
@@ -18,15 +19,18 @@ public class Card {
     private boolean faceUp;
     private CardStack stack;
     private CardGroup group;
-    
-    private Card() {
-        new CardGroup(this);
-    }
 
+    /**
+     * Luokan Card konstruktori, joka asettaa kortille värin ja arvon
+     *
+     * @param value Kortin arvo
+     * @param color Kortin väri
+     */
     public Card(Value value, Color color) {
         this.value = value;
         this.color = color;
         this.faceUp = false;
+        CardGroup cardGroup = new CardGroup(this);
     }
 
     public Color getColor() {
@@ -37,6 +41,9 @@ public class Card {
         return value;
     }
 
+    /**
+     * Luokan Card arvon kertova muuttuja
+     */
     public enum Value {
         ACE("A"), TWO("2"), THREE("3"), FOUR("4"), FIVE("5"), SIX("6"), SEVEN("7"), EIGHT("8"), NINE("9"), TEN("10"), JACK("J"), QUEEN("Q"), KING("K");
 
@@ -47,6 +54,9 @@ public class Card {
         }
     }
 
+    /**
+     * Luokan Card värin kertova muuttuja
+     */
     public enum Color {
         CLUBS("♣"), SPADES("♠"), HEARTS("♥"), DIAMONDS("♦");
 
@@ -55,13 +65,13 @@ public class Card {
         private Color(String str) {
             this.str = str;
         }
-        
+
+        /**
+         * Muuttujan Color metodi, joka kertoo onko kyseinen kortti väriltään musta vai ei
+         * @return      palauttaa true, jos väri on pata tai risti, muuten palauttaa false
+         */
         public boolean isBlack() {
-            if (this == CLUBS || this == SPADES) {
-                return true;
-            } else {
-                return false;
-            }
+            return this == CLUBS || this == SPADES;
         }
     }
 
@@ -69,10 +79,15 @@ public class Card {
         this.faceUp = faceUp;
     }
 
+    /**
+     * 
+     * @return true, jos kortti on kuvapuoli ylöspäin, muuten false
+     */
     public boolean isTheCardFaceUp() {
         return faceUp;
     }
 
+    @Override
     public String toString() {
         if (this.isTheCardFaceUp()) {
             return "Card [" + color + " " + value + " up]";
@@ -88,29 +103,36 @@ public class Card {
     public CardStack getStack() {
         return stack;
     }
-    
+
+    /**
+     * Luokan Card sisällä oleva luokka, joka määrittelee kortin muuttujan Group
+     */
     public static class CardGroup extends Group {
-        
+
         private Card card;
-        
+
+        /**
+         * Luokan CardGroup konstruktori
+         * @param card      Kortti, jonka Group kyseessä on
+         */
         public CardGroup(Card card) {
             this.card = card;
             card.setGroup(this);
         }
-        
+
         public Card getCard() {
             return card;
         }
-        
+
         public void setCard(Card card) {
             this.card = card;
         }
     }
-    
+
     public CardGroup getGroup() {
         return this.group;
     }
-    
+
     public void setGroup(CardGroup group) {
         this.group = group;
     }

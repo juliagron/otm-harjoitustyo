@@ -11,11 +11,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -24,7 +22,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -37,13 +34,12 @@ import pasianssi.domain.CardStack;
 import pasianssi.domain.StartingSituation;
 import pasianssi.domain.Card.CardGroup;
 
-
 /**
  *
  * @author juliagro
  */
 public class PasianssiUi extends Application {
-    
+
     int seconds;
     int delay = 1000;
     int step = 1000;
@@ -70,18 +66,18 @@ public class PasianssiUi extends Application {
     private List<CardStack> stacks = new ArrayList();
     private final StartingSituation situation = new StartingSituation(deck, waste, endStack1, endStack2, endStack3, endStack4, table1, table2, table3, table4, table5, table6, table7);
     int drawing = 1;
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         launch(args);
     }
-    
+
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         situation.newDeal();
         game(primaryStage);
-        
+
     }
-    
+
     public void game(Stage primaryStage) {
         primaryStage.setTitle("Solitaire");
 
@@ -94,6 +90,7 @@ public class PasianssiUi extends Application {
 
         timer = new Timer();
         TimerTask task = new TimerTask() {
+            @Override
             public void run() {
                 seconds++;
                 int min = seconds / 60;
@@ -146,7 +143,7 @@ public class PasianssiUi extends Application {
 
         primaryStage.show();
     }
-    
+
     public void restartNew(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
         situation.newDeal();
@@ -158,21 +155,21 @@ public class PasianssiUi extends Application {
         situation.sameDeal();
         game(stage);
     }
-    
+
     public void cleanup(BorderPane borderPane) {
         borderPane.getChildren().clear();
         timer.cancel();
         timer.purge();
         seconds = 0;
     }
-    
+
     public void drawStartingSituation(Group group) {
         stacks = situation.getListOfAllStacks();
-        for (CardStack stack : stacks) {
+        stacks.stream().forEach((stack) -> {
             drawStack(group, stack);
-        }
+        });
     }
-    
+
     public void drawCard(Card card) {
         Rectangle rec = new Rectangle();
         CardGroup group = new CardGroup(card);
@@ -183,12 +180,18 @@ public class PasianssiUi extends Application {
                     group.setLayoutY(0);
                 } else if (drawing == 3) {
                     group.setLayoutY(0);
-                    if (card.getStack().cards().indexOf(card) % 3 == 0) {
-                        group.setLayoutX(0);
-                    } else if (card.getStack().cards().indexOf(card) % 3 == 1) {
-                        group.setLayoutX(SEPARATION / 2);
-                    } else if (card.getStack().cards().indexOf(card) % 3 == 2) {
-                        group.setLayoutX(SEPARATION);
+                    switch (card.getStack().cards().indexOf(card) % 3) {
+                        case 0:
+                            group.setLayoutX(0);
+                            break;
+                        case 1:
+                            group.setLayoutX(SEPARATION / 2);
+                            break;
+                        case 2:
+                            group.setLayoutX(SEPARATION);
+                            break;
+                        default:
+                            break;
                     }
                 }
             } else {
@@ -239,7 +242,7 @@ public class PasianssiUi extends Application {
         }
 
     }
-    
+
     public void drawEmpty(Group group) {
         Rectangle rec = new Rectangle();
         rec.setWidth(WIDTH);
@@ -251,7 +254,7 @@ public class PasianssiUi extends Application {
         group.getChildren().add(rec);
 
     }
-    
+
     public void drawStack(Group group, CardStack stack) {
         Group group1 = new Group();
         List<Card> cards = stack.cards();
@@ -264,15 +267,17 @@ public class PasianssiUi extends Application {
             drawEmpty(group1);
         } else {
             drawEmpty(group1);
-            for (Card card : cards) {
+            cards.stream().map((card) -> {
                 drawCard(card);
+                return card;
+            }).forEach((card) -> {
                 group1.getChildren().add(card.getGroup());
-            }
+            });
         }
         group.getChildren().add(group1);
 
     }
-    
+
     public void reDrawStack(CardStack stack) {
         Group group = stack.getGroup();
         if (stack.isTheStackOnTheTable() && !"1".equals(stack.sizeOfTheStack())) {
@@ -289,13 +294,13 @@ public class PasianssiUi extends Application {
         drawStack(bigGroup, stack);
         stack.getGroup().toBack();
     }
-    
+
     public void clickingTheDeck() {
         if (stacks.get(0).sizeOfTheStack() == 0) {
             //return all the cards to the deck
             List<Card> copy = new ArrayList();
             copy.addAll(stacks.get(1).cards());
-            for (int i = copy.size()-1; i >= 0; i--) {
+            for (int i = copy.size() - 1; i >= 0; i--) {
                 copy.get(i).setTheCardFaceUp(false);
                 stacks.get(1).cards().remove(copy.get(i));
                 stacks.get(0).cards().add(copy.get(i));
@@ -306,7 +311,7 @@ public class PasianssiUi extends Application {
             c.getGroup().getChildren().clear();
             stacks.get(0).cards().remove(c);
             c.setTheCardFaceUp(true);
-            new CardGroup(c);
+            CardGroup cardGroup = new CardGroup(c);
             stacks.get(1).cards().add(c);
             c.setStack(stacks.get(1));
         } else if (drawing == 3) {
@@ -323,9 +328,9 @@ public class PasianssiUi extends Application {
             c.setTheCardFaceUp(true);
             ca.setTheCardFaceUp(true);
             car.setTheCardFaceUp(true);
-            new CardGroup(c);
-            new CardGroup(ca);
-            new CardGroup(car);
+            CardGroup cardGroup = new CardGroup(c);
+            CardGroup cardGroup1 = new CardGroup(ca);
+            CardGroup cardGroup2 = new CardGroup(car);
             stacks.get(1).cards().add(c);
             stacks.get(1).cards().add(ca);
             stacks.get(1).cards().add(car);
@@ -337,5 +342,11 @@ public class PasianssiUi extends Application {
         reDrawStack(stacks.get(1));
 
     }
-    
+
+    @Override
+    public void stop() throws Exception {
+        timer.cancel();
+        super.stop();
+    }
+
 }
