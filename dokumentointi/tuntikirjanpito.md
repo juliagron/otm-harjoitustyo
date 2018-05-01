@@ -25,4 +25,5 @@ päivä | aika | mitä tein
 24.4 | 1 | käyttöliittymää
 |  | 1 | arkkitehtuurikuvaus
 1.5 | 1 | javadocin aloitus
-yht. | 31.5 |
+|  | 0.5 | alustava käyttöohje
+yht. | 32 |
