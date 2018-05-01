@@ -26,7 +26,7 @@ Pelaaminen ohjelmassa tapahtuu hiirt채 k채ytt채m채ll채. K채sipakan klikkaus k채�
 
 Sovelluksen yl채laidassa sijaitsee kaksi pudotusvalikkoa: *Game* ja *Draw*
 
-<img src="https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/menu_game.jpg" width="300"> <img src="https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/menu_draw.jpg" width="300">
+<img src="https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/menu_game.jpg" width="300">	 <img src="https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/menu_draw.jpg" width="300">
 
 #### Valikko *Game*
 
