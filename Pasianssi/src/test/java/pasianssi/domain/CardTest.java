@@ -22,6 +22,12 @@ import pasianssi.domain.Card.Value;
  */
 public class CardTest {
     
+    Card card;
+    Card card1;
+    Card card2;
+    Value value;
+    Color color;
+    
     public CardTest() {
     }
     
@@ -35,6 +41,11 @@ public class CardTest {
     
     @Before
     public void setUp() {
+        card = new Card(Value.ACE, Color.CLUBS);
+        card1 = new Card(Value.ACE, Color.DIAMONDS);
+        card2 = new Card(Value.ACE, Color.SPADES);
+        value = Value.ACE;
+        color = Color.CLUBS;
     }
     
     @After
@@ -48,22 +59,33 @@ public class CardTest {
     // public void hello() {}
     
     @Test
-    public void construktorSetsCorrectValues(){
-        Card card = new Card(Value.EIGHT,Color.CLUBS);
-        assertEquals("EIGHT", card.getValue().toString());
+    public void getterReturnsCorrectValue(){
+        assertEquals(value, card.getValue());
+    }
+    
+    @Test
+    public void getterReturnsCorrectColor() {
+        assertEquals(color, card.getColor());
+    }
+    
+    @Test
+    public void toStringValue() {
+        assertEquals("ACE", card.getValue().toString());
+    }
+    
+    @Test
+    public void toStringColor() {
         assertEquals("CLUBS", card.getColor().toString());
     }
     
     @Test
     public void settingTheCardFaceUp(){
-        Card card = new Card(Value.ACE, Color.DIAMONDS);
         card.setTheCardFaceUp(true);
         assertTrue(card.isTheCardFaceUp());
     }
     
     @Test
     public void correctToString() {
-        Card card = new Card(Value.ACE, Color.CLUBS);
         assertEquals("Card [CLUBS ACE down]", card.toString());
         card.setTheCardFaceUp(true);
         assertEquals("Card [CLUBS ACE up]", card.toString());
@@ -72,32 +94,34 @@ public class CardTest {
     @Test
     public void correctStack() {
         CardStack stack = new CardStack(1,1);
-        Card card = new Card(Value.ACE, Color.CLUBS);
         card.setStack(stack);
         assertEquals(stack, card.getStack());
     }
     
     @Test
-    public void isTheCardBlack() {
-        Card card = new Card(Value.ACE, Color.CLUBS);
-        Card sec = new Card(Value.ACE,Color.DIAMONDS);
-        Card thi = new Card(Value.ACE, Color.SPADES);
-        assertTrue(card.getColor().isBlack());
-        assertFalse(sec.getColor().isBlack());
-        assertTrue(thi.getColor().isBlack());
+    public void isTheCardBlack1() {
+        assertTrue(card.getColor().isBlack()); 
+    }
+    
+    @Test
+    public void isTheCardBlack2() {
+        assertFalse(card1.getColor().isBlack());
+    }
+    
+    @Test
+    public void isTheCardBlack3() {
+        assertTrue(card2.getColor().isBlack());
     }
     
     @Test
     public void cardGroup() {
-        Card card = new Card(Value.ACE, Color.CLUBS);
-        Card sec = new Card(Value.ACE,Color.DIAMONDS);
         CardGroup group = new CardGroup(card);
-        CardGroup secGroup = new CardGroup(sec);
+        CardGroup secGroup = new CardGroup(card1);
         assertEquals(card, group.getCard());
-        group.setCard(sec);
-        assertEquals(sec, group.getCard());
-        assertEquals(secGroup, sec.getGroup());
-        sec.setGroup(group);
-        assertEquals(group, sec.getGroup());
+        group.setCard(card1);
+        assertEquals(card1, group.getCard());
+        assertEquals(secGroup, card1.getGroup());
+        card1.setGroup(group);
+        assertEquals(group, card1.getGroup());
     }
 }

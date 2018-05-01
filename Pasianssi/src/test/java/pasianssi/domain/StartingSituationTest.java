@@ -6,7 +6,11 @@
 package pasianssi.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import static org.hamcrest.CoreMatchers.not;
+import org.hamcrest.core.IsEqual;
+import org.hamcrest.core.IsNot;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,13 +81,24 @@ public class StartingSituationTest {
     //
     // @Test
     // public void hello() {}
-    
     @Test
     public void gettingListOfCards() {
-        List<Card> testcard = new ArrayList();
-        testcard = situation.getListOfAllCards();
-        assertEquals(52, testcard.size());
+        assertEquals(52, cards.size());
+    }
+
+    @Test
+    public void sameDealDoesNotShuffleTheDeck() {
+        List<Card> temp = new ArrayList();
+        temp.addAll(cards);
+        situation.sameDeal();
+        assertEquals(temp, cards);
     }
     
-    
+    @Test
+    public void newDealShufflesTheDeck() {
+        List<Card> temp = new ArrayList();
+        temp.addAll(cards);
+        situation.newDeal();
+        assertThat(temp, IsNot.not(IsEqual.equalTo(cards)));
+    }
 }

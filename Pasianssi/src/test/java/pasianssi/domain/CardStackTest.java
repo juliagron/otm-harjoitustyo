@@ -22,22 +22,37 @@ import pasianssi.domain.Card.Value;
  * @author juliagro
  */
 public class CardStackTest {
-    
+
+    CardStack stack1;
+    CardStack stack2;
+    CardStack stack3;
+    CardStack stack4;
+    CardStack stack5;
+    CardStack stack6;
+    Card card;
+
     public CardStackTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
+        stack1 = new CardStack(0, 1);
+        stack2 = new CardStack(5, 1);
+        stack3 = new CardStack(6, 0);
+        stack4 = new CardStack(0, 0);
+        stack5 = new CardStack(1, 0);
+        stack6 = new CardStack(1, 1);
+        card = new Card(Value.ACE, Color.CLUBS);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -47,95 +62,111 @@ public class CardStackTest {
     //
     // @Test
     // public void hello() {}
-    
     @Test
-    public void constructorSetsCorrectLocation(){
-        CardStack stack = new CardStack(0,1);
-        int x = stack.getLocationX();
-        int y = stack.getLocationY();
+    public void constructorSetsCorrectLocation() {
+        int x = stack1.getLocationX();
+        int y = stack1.getLocationY();
         assertEquals(0, x);
         assertEquals(1, y);
     }
-    
+
     @Test
-    public void isTheStackOnTheTable(){
-        CardStack stack = new CardStack(5,1);
-        CardStack stack2 = new CardStack(6,0);
-        assertTrue(stack.isTheStackOnTheTable());
-        assertFalse(stack2.isTheStackOnTheTable());
+    public void isTheStackOnTheTableTrue() {
+        assertTrue(stack2.isTheStackOnTheTable());
     }
-    
+
     @Test
-    public void isTheStackTheDeck(){
-        CardStack stack = new CardStack(0,0);
-        CardStack stack2 = new CardStack(6,0);
-        CardStack stack3 = new CardStack(0,1);
-        assertTrue(stack.isTheStackTheDeck());
-        assertFalse(stack2.isTheStackTheDeck());
+    public void isTheStackOnTheTableFalse() {
+        assertFalse(stack3.isTheStackOnTheTable());
+    }
+
+    @Test
+    public void isTheStackTheDeck1() {
+        assertTrue(stack4.isTheStackTheDeck());
+    }
+
+    @Test
+    public void isTheStackTheDeck2() {
         assertFalse(stack3.isTheStackTheDeck());
     }
-    
+
     @Test
-    public void isTheStackNextToTheDeck(){
-        CardStack stack = new CardStack(1,0);
-        CardStack stack2 = new CardStack(6,0);
-        CardStack stack3 = new CardStack(1,1);
-        assertTrue(stack.isTheStackNextToTheDeck());
-        assertFalse(stack2.isTheStackNextToTheDeck());
+    public void isTheStackTheDeck3() {
+        assertFalse(stack1.isTheStackTheDeck());
+    }
+
+    @Test
+    public void isTheStackNextToTheDeck1() {
+        assertTrue(stack5.isTheStackNextToTheDeck());
+    }
+
+    @Test
+    public void isTheStackNextToTheDeck2() {
         assertFalse(stack3.isTheStackNextToTheDeck());
     }
-    
+
     @Test
-    public void inTheStackOneOfTheEndStacks(){
-        CardStack stack = new CardStack(5,0);
-        CardStack stack2 = new CardStack(6,1);
-        CardStack stack3 = new CardStack(0,0);
-        assertTrue(stack.isTheStackOneOfTheEndStacks());
-        assertFalse(stack2.isTheStackOneOfTheEndStacks());
-        assertFalse(stack3.isTheStackOneOfTheEndStacks());
+    public void isTheStackNextToTheDeck3() {
+        assertFalse(stack6.isTheStackNextToTheDeck());
+    }
+
+    @Test
+    public void isTheStackOneOfTheEndStacks1() {
+        assertTrue(stack3.isTheStackOneOfTheEndStacks());
     }
     
+    @Test
+    public void isTheStackOneOfTheEndStacks2() {
+        assertFalse(stack2.isTheStackOneOfTheEndStacks());
+    }
+    
+    @Test
+    public void isTheStackOneOfTheEndStacks3() {
+        assertFalse(stack4.isTheStackOneOfTheEndStacks());
+    }
+
     @Test
     public void addingCardsToTheStack() {
-        CardStack stack = new CardStack(1,1);
-        Card card = new Card(Value.ACE, Color.CLUBS);
-        stack.addCardToTheStack(card);
-        Card card1 = stack.topCard();
+        stack6.addCardToTheStack(card);
+        Card card1 = stack6.topCard();
         assertEquals(card, card1);
     }
-    
+
     @Test
     public void sizeOfTheStack() {
-        CardStack stack = new CardStack(1,1);
-        stack.addCardToTheStack(new Card(Value.ACE, Color.CLUBS));
-        stack.addCardToTheStack(new Card(Value.EIGHT, Color.CLUBS));
-        assertEquals(2, stack.sizeOfTheStack());
+        stack6.addCardToTheStack(card);
+        stack6.addCardToTheStack(card);
+        assertEquals(2, stack6.sizeOfTheStack());
     }
-    
+
     @Test
     public void listOfCardsInTheStack() {
-        CardStack stack = new CardStack(0,0);
-        stack.addCardToTheStack(new Card(Value.ACE, Color.CLUBS));
-        stack.addCardToTheStack(new Card(Value.EIGHT, Color.CLUBS));
+        stack4.addCardToTheStack(card);
+        stack4.addCardToTheStack(card);
         List<Card> cards = new ArrayList();
-        cards = stack.cards();
+        cards = stack4.cards();
         assertEquals(2, cards.size());
-        stack.emptyStack();
+    }
+    @Test
+    public void emptyStack() {
+        stack4.addCardToTheStack(card);
+        stack4.addCardToTheStack(card);
+        List<Card> cards = new ArrayList();
+        cards = stack4.cards();
+        stack4.emptyStack();
         cards.clear();
-        cards = stack.cards();
+        cards = stack4.cards();
         assertEquals(0, cards.size());
     }
-    
+
     @Test
     public void groupsOfTheStack() {
-        CardStack stack = new CardStack(0,0);
         Group group = new Group();
         Group bigGroup = new Group();
-        stack.setBigGroup(bigGroup);
-        stack.setGroup(group);
-        assertEquals(group, stack.getGroup());
-        assertEquals(bigGroup, stack.getBigGroup());
+        stack4.setBigGroup(bigGroup);
+        stack4.setGroup(group);
+        assertEquals(group, stack4.getGroup());
+        assertEquals(bigGroup, stack4.getBigGroup());
     }
-    
-    
+
 }

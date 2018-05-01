@@ -55,7 +55,7 @@ public class HighScoreTest {
     // public void hello() {}
     
     @Test
-    public void constructorSetsCorrectValues() {
+    public void gettersReturnCorrectValues() {
         assertEquals(name, score.getName());
         assertEquals(time, score.getTime());
     }
