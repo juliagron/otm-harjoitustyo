@@ -9,6 +9,8 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Työn tarkoituksena on 
 
 [Arkkitehtuuri](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/arkkitehtuuri.md)
 
+[Käyttöohje](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
+
 ## Releaset
 
 [Viikko 5](https://github.com/juliagron/otm-harjoitustyo/releases/tag/viikko5)
@@ -33,6 +35,14 @@ Komento
     mvn package
 
 generoi hakemistoon *target* suoritettavan jar-tiedoston *Pasianssi-1.0-SNAPSHOT.jar*
+
+### JavaDoc
+
+JavaDoc generoidaan komennolla
+
+    mvn javadoc:javadoc
+
+JavaDocia voi katsella selaimella avaamalla tiedoston *target/site/apidocs/index.html*
 
 ### Checkstyle
 
