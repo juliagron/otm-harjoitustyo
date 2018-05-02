@@ -71,6 +71,20 @@ public class CardStack {
     public boolean isTheStackOneOfTheEndStacks() {
         return y == 0 & x >= 3;
     }
+    
+    /**
+     * Metodi kertoo kaikki kortit pinossa annetun kortin jälkeen
+     * @param card  Annettu kortti
+     * @return      lista korteista
+     */
+    public List<Card> getRestAfter(Card card) {
+        int start = cards.indexOf(card) + 1;
+        List<Card> rest = new ArrayList();
+        for (int i = start; i < cards.size(); i++) {
+            rest.add(cards.get(i));
+        }
+        return rest;
+    }
 
     /**
      * Metodi, jolla kortteja lisätään pinoon
@@ -82,10 +96,21 @@ public class CardStack {
     }
     
     /**
+     * Metodi poistaa halutun kortin pinosta
+     * @param card  Poistettava kortti
+     */
+    public void removeCardFromTheStack(Card card) {
+        this.cards.remove(card);
+    }
+    
+    /**
      * Metodi kertoo pinon päällimäisen kortin
      * @return      pinon päällimäinen kortti
      */
     public Card topCard() {
+        if (cards.isEmpty()) {
+            return null;
+        }
         return cards.get(cards.size() - 1);
     }
     

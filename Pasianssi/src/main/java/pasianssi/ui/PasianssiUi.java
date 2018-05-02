@@ -6,17 +6,21 @@
 package pasianssi.ui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.MouseDragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -33,6 +37,7 @@ import pasianssi.domain.Card;
 import pasianssi.domain.CardStack;
 import pasianssi.domain.StartingSituation;
 import pasianssi.domain.Card.CardGroup;
+import pasianssi.domain.LegalMove;
 
 /**
  *
@@ -47,9 +52,9 @@ public class PasianssiUi extends Application {
     private final Paint CARD_BACK = Paint.valueOf("linear-gradient(from 15% 15% to 100% 100%, #0066ff, #66ffff)");
     private final double HEIGHT = 150;
     private final double WIDTH = 100;
-    private final double WINWIDTH = 900;
-    private final double WINHEIGHT = 650;
-    private final double SEPARATION = 20;
+    private final double WINWIDTH = 1000;
+    private final double WINHEIGHT = 750;
+    private final double SEPARATION = 40;
     private final CardStack deck = new CardStack(0, 0);
     private final CardStack waste = new CardStack(1, 0);
     private final CardStack endStack1 = new CardStack(3, 0);
@@ -66,6 +71,8 @@ public class PasianssiUi extends Application {
     private List<CardStack> stacks = new ArrayList();
     private final StartingSituation situation = new StartingSituation(deck, waste, endStack1, endStack2, endStack3, endStack4, table1, table2, table3, table4, table5, table6, table7);
     int drawing = 1;
+    private List<Card> inDrag = new ArrayList();
+    private LegalMove move = new LegalMove();
 
     public static void main(String[] args) {
         launch(args);
@@ -267,21 +274,27 @@ public class PasianssiUi extends Application {
             drawEmpty(group1);
         } else {
             drawEmpty(group1);
-            cards.stream().map((card) -> {
-                drawCard(card);
-                return card;
-            }).forEach((card) -> {
-                group1.getChildren().add(card.getGroup());
+            cards.stream().map((c) -> {
+                drawCard(c);
+                return c;
+            }).map((c) -> {
+                group1.getChildren().add(c.getGroup());
+                return c;
+            }).filter((c) -> (c.isTheCardFaceUp())).forEach((c) -> {
+                makeDraggable(c);
             });
         }
         group.getChildren().add(group1);
+        if (stack.isTheStackOnTheTable() || stack.isTheStackOneOfTheEndStacks()) {
+            makeTarget(stack);
+        }
 
     }
 
     public void reDrawStack(CardStack stack) {
         Group group = stack.getGroup();
         if (stack.isTheStackOnTheTable() && !"1".equals(stack.sizeOfTheStack())) {
-            if (!stack.topCard().isTheCardFaceUp()) {
+            if (stack.topCard() != null && !stack.topCard().isTheCardFaceUp()) {
                 stack.topCard().setTheCardFaceUp(true);
             }
         }
@@ -316,31 +329,179 @@ public class PasianssiUi extends Application {
             c.setStack(stacks.get(1));
         } else if (drawing == 3) {
             //draw 3
-            Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
-            Card ca = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 2);
-            Card car = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 3);
-            c.getGroup().getChildren().clear();
-            ca.getGroup().getChildren().clear();
-            car.getGroup().getChildren().clear();
-            stacks.get(0).cards().remove(c);
-            stacks.get(0).cards().remove(ca);
-            stacks.get(0).cards().remove(car);
-            c.setTheCardFaceUp(true);
-            ca.setTheCardFaceUp(true);
-            car.setTheCardFaceUp(true);
-            CardGroup cardGroup = new CardGroup(c);
-            CardGroup cardGroup1 = new CardGroup(ca);
-            CardGroup cardGroup2 = new CardGroup(car);
-            stacks.get(1).cards().add(c);
-            stacks.get(1).cards().add(ca);
-            stacks.get(1).cards().add(car);
-            c.setStack(stacks.get(1));
-            ca.setStack(stacks.get(1));
-            car.setStack(stacks.get(1));
+            if (stacks.get(0).cards().size() % 3 == 0) {
+                Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
+                Card ca = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 2);
+                Card car = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 3);
+                c.getGroup().getChildren().clear();
+                ca.getGroup().getChildren().clear();
+                car.getGroup().getChildren().clear();
+                stacks.get(0).cards().remove(c);
+                stacks.get(0).cards().remove(ca);
+                stacks.get(0).cards().remove(car);
+                c.setTheCardFaceUp(true);
+                ca.setTheCardFaceUp(true);
+                car.setTheCardFaceUp(true);
+                CardGroup cardGroup = new CardGroup(c);
+                CardGroup cardGroup1 = new CardGroup(ca);
+                CardGroup cardGroup2 = new CardGroup(car);
+                stacks.get(1).cards().add(c);
+                stacks.get(1).cards().add(ca);
+                stacks.get(1).cards().add(car);
+                c.setStack(stacks.get(1));
+                ca.setStack(stacks.get(1));
+                car.setStack(stacks.get(1));
+            } else if (stacks.get(1).cards().size() % 3 == 1) {
+                Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
+                Card ca = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 2);
+                c.getGroup().getChildren().clear();
+                ca.getGroup().getChildren().clear();
+                stacks.get(0).cards().remove(c);
+                stacks.get(0).cards().remove(ca);
+                c.setTheCardFaceUp(true);
+                ca.setTheCardFaceUp(true);
+                CardGroup cardGroup = new CardGroup(c);
+                CardGroup cardGroup1 = new CardGroup(ca);
+                stacks.get(1).cards().add(c);
+                stacks.get(1).cards().add(ca);
+                c.setStack(stacks.get(1));
+                ca.setStack(stacks.get(1));
+            } else if (stacks.get(1).cards().size() % 3 == 2) {
+                Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
+                c.getGroup().getChildren().clear();
+                stacks.get(0).cards().remove(c);
+                c.setTheCardFaceUp(true);
+                CardGroup cardGroup = new CardGroup(c);
+                stacks.get(1).cards().add(c);
+                c.setStack(stacks.get(1));
+            }
         }
         reDrawStack(stacks.get(0));
         reDrawStack(stacks.get(1));
 
+    }
+    
+    public static class MouseLocation {
+
+        public double x;
+        public double y;
+    }
+    
+    public void makeTarget(CardStack stack) {
+        Group source = stack.getGroup();
+        source.setOnMouseDragReleased((final MouseDragEvent e) -> {
+            if (!inDrag.isEmpty()) {
+                CardStack targetStack = stack;
+                Card sourceCard = inDrag.get(0);
+                CardStack sourceStack = sourceCard.getStack();
+                if (sourceStack != targetStack) {
+                    List<Card> copy = new ArrayList();
+                    copy.addAll(inDrag);
+                    if (move.isTheMoveLegal(targetStack, copy)) {
+                        moveCards(copy, targetStack);
+                        inDrag.clear();
+                        copy.clear();
+                    }
+                }
+                e.consume();
+            }
+        });
+    }
+    
+    public void moveCards(List<Card> list, CardStack targetStack) {
+        if (list.isEmpty()) {
+            return;
+        }
+
+        CardStack sourceStack = list.get(0).getStack();
+        for (Card card : list) {
+            sourceStack.removeCardFromTheStack(card);
+            targetStack.addCardToTheStack(card);
+            CardGroup cardGroup = new CardGroup(card);
+            targetStack.getGroup().getChildren().add(cardGroup);
+            makeDraggable(card);
+            card.setStack(targetStack);
+        }
+        reDrawStack(sourceStack);
+        reDrawStack(targetStack);
+    }
+    
+    public boolean moveToEndStack(Card card) {
+        List<Card> toPut = Arrays.asList(card);
+        for (CardStack stack : stacks) {
+            if (stack.isTheStackOneOfTheEndStacks()) {
+                if (move.isTheMoveLegal(stack, toPut)) {
+                    moveCards(toPut, stack);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public void makeDraggable(Card card) {
+        final MouseLocation lastLoc = new MouseLocation();
+        CardGroup source = card.getGroup();
+        if (card != null) {
+            source.setOnDragDetected(e -> {
+                source.startFullDrag();
+                e.consume();
+            });
+            source.setOnMousePressed(e -> {
+                if (e.getClickCount() == 2) {
+                    Card sourceCard = source.getCard();
+                    if (sourceCard.isOnTopOfTheStack()) {
+                        moveToEndStack(sourceCard);
+                    }
+                } else {
+                    Card sourceCard = source.getCard();
+                    CardStack sourceStack = sourceCard.getStack();
+                    lastLoc.x = e.getSceneX();
+                    lastLoc.y = e.getSceneY();
+                    inDrag.add(sourceCard);
+                    if (sourceCard.getStack().isTheStackOnTheTable()) {
+                        sourceStack.getRestAfter(sourceCard).stream().forEach((c) -> {
+                            inDrag.add(c);
+                        });
+                    }
+                    source.setCursor(Cursor.CLOSED_HAND);
+                    source.setMouseTransparent(true);
+                    sourceStack.getGroup().toFront();
+                }
+                e.consume();
+            });
+            source.setOnMouseDragged((MouseEvent mouseEvent) -> {
+                double deltax = mouseEvent.getSceneX() - lastLoc.x;
+                double deltay = mouseEvent.getSceneY() - lastLoc.y;
+                inDrag.stream().map((c) -> {
+                    double newx = c.getGroup().getLayoutX() + deltax;
+                    double newy = c.getGroup().getLayoutY() + deltay;
+                    c.getGroup().setLayoutX(newx);
+                    c.getGroup().setLayoutY(newy);
+                    return c;
+                }).map((_item) -> {
+                    lastLoc.x = mouseEvent.getSceneX();
+                    return _item;
+                }).forEach((_item) -> {
+                    lastLoc.y = mouseEvent.getSceneY();
+                });
+                mouseEvent.consume();
+            });
+            source.setOnMouseEntered(e -> {
+                source.setCursor(Cursor.HAND);
+            });
+            source.setOnMouseReleased(e -> {
+                source.setMouseTransparent(false);
+                CardStack sourceStack = source.getCard().getStack();
+                sourceStack.getGroup().toBack();
+                if (!inDrag.isEmpty()) {
+                    Card c = inDrag.get(0);
+                    inDrag.clear();
+                    reDrawStack(c.getStack());
+                }
+                e.consume();
+            });
+        }
     }
 
     @Override

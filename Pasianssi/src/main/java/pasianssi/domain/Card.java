@@ -103,6 +103,17 @@ public class Card {
     public CardStack getStack() {
         return stack;
     }
+    
+    /**
+     * Metodi kertoo onko kortti pinonsa päällimmäinen
+     * @return  true, js kortti on pinon päälimmäinen, muulloin false
+     */
+    public boolean isOnTopOfTheStack() {
+        if (stack != null) {
+            return stack.topCard() == this;
+        }
+        return false;
+    }
 
     /**
      * Luokan Card sisällä oleva luokka, joka määrittelee kortin muuttujan Group
