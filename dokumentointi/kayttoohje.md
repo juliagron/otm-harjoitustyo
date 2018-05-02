@@ -36,4 +36,4 @@ Valikossa *Game* valittavana on kolme vaihtoehtoa: *New Deal*, *Same Deal* ja *Q
 
 #### Valikko *Draw*
 
-Valikossa *Draw* on kaksi vaihtoehtoa: *Draw one* ja *Draw three*. Tällä valikolla voi vaihtoehtojen nimien mukaisesti valita nostetaanko pakasta yksi vai kolme korttia kerrallaan.
+Valikossa *Draw* on kaksi vaihtoehtoa: *Draw one* ja *Draw three*. Tällä valikolla voi vaihtoehtojen nimien mukaisesti valita nostetaanko pakasta yksi vai kolme korttia kerrallaan. Tällä hetkellä voi vielä vaihtaa nostettavien korttien määrää kesken pelin.
