@@ -27,4 +27,7 @@ päivä | aika | mitä tein
 1.5 | 1 | javadocin aloitus
 |  | 0.5 | alustava käyttöohje
 |  | 1 | testejä
-yht. | 33 |
+2.5 | 1 | sovelluslogiikkaa
+|  | 4 | korttien raahaustoiminto
+|  | 1 | käyttöohjetta, arkkitehtuuria
+yht. | 39 |
