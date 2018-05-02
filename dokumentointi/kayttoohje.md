@@ -20,7 +20,7 @@ Sovellus avautuu aloitustilanteeseen:
 
 <img src="https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/solitaire_start.png" width="500">
 
-Pelaaminen ohjelmassa tapahtuu hiirtä käyttämällä. Käsipakan klikkaus kääntää kortin/kortteja sen viereen. Jos käsipakka on tyhjä, siirretään kaikki kortit sen vierestä takaisin käsipakkaan.
+Pelaaminen ohjelmassa tapahtuu hiirtä käyttämällä. Käsipakan klikkaus kääntää kortin/kortteja sen viereen. Jos käsipakka on tyhjä, siirretään kaikki kortit sen vierestä takaisin käsipakkaan. Kuvapuoli ylöpäin olevia kortteja voi raahata klikkaamalla niitä hiirellä. Korttien siirto noudattaa normaalin Klondike-pasianssin sääntöjä.
 
 ### Valikkorivi
 
