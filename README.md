@@ -15,6 +15,8 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Työn tarkoituksena on 
 
 [Viikko 5](https://github.com/juliagron/otm-harjoitustyo/releases/tag/viikko5)
 
+[Viikko 6](https://github.com/juliagron/otm-harjoitustyo/releases/tag/viikko6)
+
 ## Komentorivikomennot
 
 ### Testaus
