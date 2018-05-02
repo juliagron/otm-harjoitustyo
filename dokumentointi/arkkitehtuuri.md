@@ -18,7 +18,7 @@ Käyttöliittymä on pyritty eristämää sovelluslogiikasta.
 
 Sovelluslogiikan eri luokkien sihde toisiinsa:
 
-![class/package diagram](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/class-package-diagram.png)
+![class/package diagram]
 
 ## Päätoiminnallisuudet
 
