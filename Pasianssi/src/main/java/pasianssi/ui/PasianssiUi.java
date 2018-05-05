@@ -5,20 +5,28 @@
  */
 package pasianssi.ui;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -32,11 +40,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import pasianssi.dao.Database;
+import pasianssi.dao.HighScoreDao;
 
 import pasianssi.domain.Card;
 import pasianssi.domain.CardStack;
 import pasianssi.domain.StartingSituation;
 import pasianssi.domain.Card.CardGroup;
+import pasianssi.domain.HighScore;
 import pasianssi.domain.LegalMove;
 
 /**
@@ -73,6 +84,9 @@ public class PasianssiUi extends Application {
     int drawing = 1;
     private List<Card> inDrag = new ArrayList();
     private LegalMove move = new LegalMove();
+    private Database database;
+    private HighScoreDao highDao;
+    private MenuItem menuNew = new MenuItem("New Deal");
 
     public static void main(String[] args) {
         launch(args);
@@ -80,6 +94,8 @@ public class PasianssiUi extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        database = new Database();
+        highDao = new HighScoreDao(database);
         situation.newDeal();
         game(primaryStage);
 
@@ -111,7 +127,16 @@ public class PasianssiUi extends Application {
         MenuBar menu = new MenuBar();
         Menu game = new Menu("Game");
         Menu draw = new Menu("Draw");
-        MenuItem menuNew = new MenuItem("New Deal");
+        Label highscores = new Label("High scores");
+        highscores.setOnMouseClicked(e -> {
+            try {
+                showScores();
+            } catch (SQLException ex) {
+                Logger.getLogger(PasianssiUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        Menu high = new Menu();
+        high.setGraphic(highscores);
         MenuItem menuQuit = new MenuItem("Quit");
         MenuItem menuSame = new MenuItem("Same Deal");
         MenuItem drawOne = new MenuItem("Draw one");
@@ -124,7 +149,7 @@ public class PasianssiUi extends Application {
 
         game.getItems().addAll(menuNew, menuSame, menuQuit);
         draw.getItems().addAll(drawOne, drawThree);
-        menu.getMenus().addAll(game, draw);
+        menu.getMenus().addAll(game, draw, high);
 
         borderPane.setTop(menu);
         borderPane.setBottom(timeBar);
@@ -142,6 +167,9 @@ public class PasianssiUi extends Application {
         r.setWidth(WIDTH);
         r.setFill(Color.TRANSPARENT);
         r.setOnMouseClicked(e -> clickingTheDeck());
+        r.setOnMouseEntered(e -> {
+            r.setCursor(Cursor.HAND);
+        });
         group.getChildren().add(r);
 
         Scene scene = new Scene(borderPane, WINWIDTH, WINHEIGHT);
@@ -398,7 +426,11 @@ public class PasianssiUi extends Application {
                     List<Card> copy = new ArrayList();
                     copy.addAll(inDrag);
                     if (move.isTheMoveLegal(targetStack, copy)) {
-                        moveCards(copy, targetStack);
+                        try {
+                            moveCards(copy, targetStack);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PasianssiUi.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         inDrag.clear();
                         copy.clear();
                     }
@@ -408,25 +440,33 @@ public class PasianssiUi extends Application {
         });
     }
     
-    public void moveCards(List<Card> list, CardStack targetStack) {
+    public void moveCards(List<Card> list, CardStack targetStack) throws SQLException {
         if (list.isEmpty()) {
             return;
         }
 
         CardStack sourceStack = list.get(0).getStack();
-        for (Card card : list) {
+        list.stream().map((card) -> {
             sourceStack.removeCardFromTheStack(card);
+            return card;
+        }).map((card) -> {
             targetStack.addCardToTheStack(card);
+            return card;
+        }).map((card) -> {
             CardGroup cardGroup = new CardGroup(card);
             targetStack.getGroup().getChildren().add(cardGroup);
             makeDraggable(card);
+            return card;
+        }).forEach((card) -> {
             card.setStack(targetStack);
-        }
+        });
         reDrawStack(sourceStack);
         reDrawStack(targetStack);
+        
+        checkFinish();
     }
     
-    public boolean moveToEndStack(Card card) {
+    public boolean moveToEndStack(Card card) throws SQLException {
         List<Card> toPut = Arrays.asList(card);
         for (CardStack stack : stacks) {
             if (stack.isTheStackOneOfTheEndStacks()) {
@@ -451,7 +491,11 @@ public class PasianssiUi extends Application {
                 if (e.getClickCount() == 2) {
                     Card sourceCard = source.getCard();
                     if (sourceCard.isOnTopOfTheStack()) {
-                        moveToEndStack(sourceCard);
+                        try {
+                            moveToEndStack(sourceCard);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(PasianssiUi.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
                 } else {
                     Card sourceCard = source.getCard();
@@ -502,6 +546,81 @@ public class PasianssiUi extends Application {
                 e.consume();
             });
         }
+    }
+    
+    public void checkFinish() throws SQLException {
+        boolean endsFull = true;
+        for (CardStack stack : stacks) {
+            if (stack.isTheStackOneOfTheEndStacks()) {
+                if (stack.sizeOfTheStack() != 13) {
+                    endsFull = false;
+                }
+            }
+        }
+
+        if (endsFull) {
+            timer.cancel();
+            int howMany = highDao.howManyScores();
+            List<HighScore> scores = new ArrayList();
+            if (howMany < 5) {
+                scores = highDao.findAll();
+            } else {
+                scores = highDao.findFive();
+            }
+            int last = 0;
+            if (howMany == 0) {
+                last = 0;
+            } else {
+                last = scores.get(scores.size() - 1).getTime();
+            }
+
+            if (seconds > last) {
+                TextInputDialog dialog = new TextInputDialog();
+                dialog.setTitle("New Highscore");
+                dialog.setHeaderText(null);
+                dialog.setContentText("Please enter your name:");
+
+                Optional<String> result = dialog.showAndWait();
+                if (result.isPresent()) {
+                    List<HighScore> newScores = new ArrayList();
+                    HighScore newScore = new HighScore(result.get(), seconds);
+                    highDao.save(newScore);
+                    if (highDao.howManyScores() < 5) {
+                        newScores = highDao.findAll();
+                    } else {
+                        newScores = highDao.findFive();
+                    }
+                    for (int i = 0; i < highDao.howManyScores(); i++) {
+                        int min = newScores.get(i).getTime() / 60;
+                        int sec = newScores.get(i).getTime() % 60;
+                        System.out.println(i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec);
+                    }
+                }
+            } else {
+                int min = seconds / 60;
+                int sec = seconds % 60;
+                Alert alert = new Alert(Alert.AlertType.NONE, "Your time: " + min + ":" + sec, ButtonType.OK, ButtonType.CANCEL);
+                alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> menuNew.fire());
+            }
+
+        }
+    }
+    
+    public void showScores() throws SQLException {
+        List<HighScore> newScores = new ArrayList();
+        if (highDao.howManyScores() < 5) {
+            newScores = highDao.findAll();
+        } else {
+            newScores = highDao.findFive();
+        }
+        String high = "";
+        for (int i = 0; i < newScores.size(); i++) {
+            String score = i + 1 + ". " + newScores.get(i).getName() + "    " + newScores.get(i).getTime() / 60 + ":" + newScores.get(i).getTime() % 60 + "\n";
+            high = high + score;
+        }
+        Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.CANCEL);
+        alert.setTitle("High Scores");
+        alert.showAndWait().isPresent();
     }
 
     @Override

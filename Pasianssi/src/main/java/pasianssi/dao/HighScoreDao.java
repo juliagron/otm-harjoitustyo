@@ -11,6 +11,7 @@ package pasianssi.dao;
  */
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import pasianssi.domain.HighScore;
 
@@ -23,17 +24,8 @@ public class HighScoreDao implements Dao<HighScore, Integer> {
     }
 
     @Override
-    public HighScore findOne(Integer key) throws SQLException {
-        List<HighScore> score = this.database.queryAndCollect("SELECT * FROM HighScore WHERE id = ?", new HighScoreCollector(), key);
-        if (score.isEmpty()) {
-            return null;
-        }
-        return score.get(0);
-    }
-
-    @Override
     public void save(HighScore score) throws SQLException {
-        this.database.update("INSERT INTO HighScore (name, tima) VALUES(?,?)", score.getName(), score.getTime());
+        this.database.update("INSERT INTO HighScore (name, time) VALUES(?,?)", score.getName(), score.getTime());
     }
 
     @Override
@@ -44,6 +36,16 @@ public class HighScoreDao implements Dao<HighScore, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         this.database.update("DELETE FROM HighScore WHERE id = ?", key);
+    }
+    
+    public List<HighScore> findFive() throws SQLException {
+        return this.database.queryAndCollect("SELECT * FROM HighScore ORDER BY time LIMIT 5", new HighScoreCollector());
+    }
+    
+    public Integer howManyScores() throws SQLException {
+        List<HighScore> scores = new ArrayList();
+        scores = findAll();
+        return scores.size();
     }
     
 }

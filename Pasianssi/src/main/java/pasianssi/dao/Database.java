@@ -18,8 +18,8 @@ public class Database {
     
     private final Connection connection;
 
-    public Database(String address) throws Exception {
-        this.connection = DriverManager.getConnection(address);
+    public Database() throws Exception{
+        this.connection = DriverManager.getConnection("jdbc:sqlite:database.db");
     }
 
     public <T> List<T> queryAndCollect(String query, Collector<T> col, Object... params) throws SQLException {

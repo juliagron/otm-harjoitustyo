@@ -12,9 +12,9 @@ package pasianssi.domain;
 public class HighScore {
     
     private String name;
-    private String time;
+    private Integer time;
     
-    public HighScore(String name, String time) {
+    public HighScore(String name, Integer time) {
         this.name = name;
         this.time = time;
     }
@@ -23,7 +23,7 @@ public class HighScore {
         return this.name;
     }
     
-    public String getTime() {
+    public Integer getTime() {
         return this.time;
     }
     
@@ -31,7 +31,7 @@ public class HighScore {
         this.name = name;
     }
     
-    public void setTime(String time) {
+    public void setTime(Integer time) {
         this.time = time;
     }
 }
