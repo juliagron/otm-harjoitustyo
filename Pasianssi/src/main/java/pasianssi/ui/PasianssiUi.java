@@ -568,7 +568,7 @@ public class PasianssiUi extends Application {
                 scores = highDao.findFive();
             }
             int last = 0;
-            if (howMany == 0) {
+            if (howMany == 0 || scores.size() < 5) {
                 last = 0;
             } else {
                 last = scores.get(scores.size() - 1).getTime();
@@ -590,11 +590,16 @@ public class PasianssiUi extends Application {
                     } else {
                         newScores = highDao.findFive();
                     }
+                    String high = "";
                     for (int i = 0; i < highDao.howManyScores(); i++) {
                         int min = newScores.get(i).getTime() / 60;
                         int sec = newScores.get(i).getTime() % 60;
-                        System.out.println(i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec);
+                        String string = i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec + "\n";
+                        high = high + string;
                     }
+                    Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.CANCEL);
+                    alert.setTitle("High Scores");
+                    alert.showAndWait().isPresent();
                 }
             } else {
                 int min = seconds / 60;
