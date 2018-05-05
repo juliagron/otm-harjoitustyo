@@ -30,4 +30,5 @@ päivä | aika | mitä tein
 2.5 | 1 | sovelluslogiikkaa
 |  | 4 | korttien raahaustoiminto
 |  | 1 | käyttöohjetta, arkkitehtuuria
-yht. | 39 |
+6.5 | 4 | käyttöliittymään pelin lopetus, highscoren lisäys
+yht. | 43 |
