@@ -20,8 +20,8 @@ public class HighScoreTest {
     
     String name;
     String name2;
-    String time;
-    String time2;
+    Integer time;
+    Integer time2;
     HighScore score;
     
     public HighScoreTest() {
@@ -39,8 +39,8 @@ public class HighScoreTest {
     public void setUp() {
         name = "jack";
         name2 = "mary";
-        time = "2:45";
-        time2 = "1:30";
+        time = 165;
+        time2 = 90;
         score = new HighScore(name, time);
     }
     
