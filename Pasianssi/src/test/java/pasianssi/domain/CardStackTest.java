@@ -30,6 +30,8 @@ public class CardStackTest {
     CardStack stack5;
     CardStack stack6;
     Card card;
+    Card card1;
+    Card card2;
 
     public CardStackTest() {
     }
@@ -51,6 +53,8 @@ public class CardStackTest {
         stack5 = new CardStack(1, 0);
         stack6 = new CardStack(1, 1);
         card = new Card(Value.ACE, Color.CLUBS);
+        card1 = new Card(Value.EIGHT, Color.DIAMONDS);
+        card2 = new Card(Value.FIVE, Color.CLUBS);
     }
 
     @After
@@ -167,6 +171,36 @@ public class CardStackTest {
         stack4.setGroup(group);
         assertEquals(group, stack4.getGroup());
         assertEquals(bigGroup, stack4.getBigGroup());
+    }
+    
+    @Test
+    public void topCardOfTheStack1() {
+        stack1.addCardToTheStack(card);
+        assertEquals(card, stack1.topCard());
+    }
+    
+    @Test
+    public void topCardOfTheStack2() {
+        assertEquals(null, stack1.topCard());
+    }
+    
+    @Test
+    public void removingCardFromTheSack() {
+        stack1.addCardToTheStack(card);
+        stack1.addCardToTheStack(card1);
+        stack1.addCardToTheStack(card2);
+        stack1.removeCardFromTheStack(card);
+        assertEquals(2, stack1.sizeOfTheStack());
+    }
+    
+    @Test
+    public void gettingTheCardsAfterACertainCard() {
+        List<Card> rest = new ArrayList();
+        stack1.addCardToTheStack(card);
+        stack1.addCardToTheStack(card1);
+        stack1.addCardToTheStack(card2);
+        rest = stack1.getRestAfter(card);
+        assertEquals(2, rest.size());
     }
 
 }

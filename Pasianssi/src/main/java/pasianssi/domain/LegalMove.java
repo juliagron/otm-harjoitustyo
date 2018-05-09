@@ -56,7 +56,7 @@ public class LegalMove {
     }
 
     /**
-     * Metodi pöutällä olevien pinojen sallittuihin siirtoihin
+     * Metodi pöydällä olevien pinojen sallittuihin siirtoihin
      * @return  true, jos siirto sallitaan, muuten false
      */
     public boolean tableStackRules() {

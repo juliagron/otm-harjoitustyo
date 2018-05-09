@@ -105,8 +105,8 @@ public class Card {
     }
     
     /**
-     * Metodi kertoo onko kortti pinonsa päällimmäinen
-     * @return  true, js kortti on pinon päälimmäinen, muulloin false
+     * Metodi kertoo onko kortti pinonsa päälimmäinen
+     * @return  true, jos kortti on pinon päälimmäinen, muulloin false
      */
     public boolean isOnTopOfTheStack() {
         if (stack != null) {

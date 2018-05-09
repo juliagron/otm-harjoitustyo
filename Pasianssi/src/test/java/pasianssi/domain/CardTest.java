@@ -21,24 +21,25 @@ import pasianssi.domain.Card.Value;
  * @author juliagro
  */
 public class CardTest {
-    
+
     Card card;
     Card card1;
     Card card2;
     Value value;
     Color color;
-    
+    CardStack stack;
+
     public CardTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
         card = new Card(Value.ACE, Color.CLUBS);
@@ -46,8 +47,9 @@ public class CardTest {
         card2 = new Card(Value.ACE, Color.SPADES);
         value = Value.ACE;
         color = Color.CLUBS;
+        stack = new CardStack(1, 1);
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -57,62 +59,61 @@ public class CardTest {
     //
     // @Test
     // public void hello() {}
-    
     @Test
-    public void getterReturnsCorrectValue(){
+    public void getterReturnsCorrectValue() {
         assertEquals(value, card.getValue());
     }
-    
+
     @Test
     public void getterReturnsCorrectColor() {
         assertEquals(color, card.getColor());
     }
-    
+
     @Test
     public void toStringValue() {
         assertEquals("ACE", card.getValue().toString());
     }
-    
+
     @Test
     public void toStringColor() {
         assertEquals("CLUBS", card.getColor().toString());
     }
-    
+
     @Test
-    public void settingTheCardFaceUp(){
+    public void settingTheCardFaceUp() {
         card.setTheCardFaceUp(true);
         assertTrue(card.isTheCardFaceUp());
     }
-    
+
     @Test
     public void correctToString() {
         assertEquals("Card [CLUBS ACE down]", card.toString());
         card.setTheCardFaceUp(true);
         assertEquals("Card [CLUBS ACE up]", card.toString());
     }
-    
+
     @Test
     public void correctStack() {
-        CardStack stack = new CardStack(1,1);
+        CardStack stack = new CardStack(1, 1);
         card.setStack(stack);
         assertEquals(stack, card.getStack());
     }
-    
+
     @Test
     public void isTheCardBlack1() {
-        assertTrue(card.getColor().isBlack()); 
+        assertTrue(card.getColor().isBlack());
     }
-    
+
     @Test
     public void isTheCardBlack2() {
         assertFalse(card1.getColor().isBlack());
     }
-    
+
     @Test
     public void isTheCardBlack3() {
         assertTrue(card2.getColor().isBlack());
     }
-    
+
     @Test
     public void cardGroup() {
         CardGroup group = new CardGroup(card);
@@ -123,5 +124,24 @@ public class CardTest {
         assertEquals(secGroup, card1.getGroup());
         card1.setGroup(group);
         assertEquals(group, card1.getGroup());
+    }
+
+    @Test
+    public void isTheCardOnTopOfTheStack1() {
+        stack.addCardToTheStack(card);
+        stack.addCardToTheStack(card1);
+        assertTrue(card1.isOnTopOfTheStack());
+    }
+    
+    @Test
+    public void isTheCardOnTopOfTheStack2() {
+        stack.addCardToTheStack(card);
+        stack.addCardToTheStack(card1);
+        assertFalse(card.isOnTopOfTheStack());
+    }
+    
+    @Test
+    public void isTheCardOnTopOfTheStack3() {
+        assertFalse(card.isOnTopOfTheStack());
     }
 }
