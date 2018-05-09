@@ -20,6 +20,9 @@ public class Database {
 
     public Database() throws Exception{
         this.connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+        Statement s = connection.createStatement();
+        String st = "CREATE TABLE IF NOT EXISTS HighScore(" + "name varchar(100)," + "time integer);";
+        s.executeUpdate(st);
     }
 
     public <T> List<T> queryAndCollect(String query, Collector<T> col, Object... params) throws SQLException {
