@@ -88,8 +88,7 @@ public class PasianssiUi extends Application {
     private HighScoreDao highDao;
     private MenuItem menuNew;
     private UnDoReDo unre;
-    private MenuItem menuUndo;
-    private MenuItem menuRedo;
+    
 
     public static void main(String[] args) {
         launch(args);
@@ -142,8 +141,8 @@ public class PasianssiUi extends Application {
         Menu high = new Menu();
         high.setGraphic(highscores);
         
-        menuUndo = new MenuItem("Undo");
-        menuRedo = new MenuItem("Redo");
+        MenuItem menuUndo = new MenuItem("Undo");
+        MenuItem menuRedo = new MenuItem("Redo");
         menuUndo.setOnAction(e -> unDoLastMove());
         menuRedo.setOnAction(e -> reDoJustUnDoneMove());
 
