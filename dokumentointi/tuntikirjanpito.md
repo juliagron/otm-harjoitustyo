@@ -31,4 +31,6 @@ päivä | aika | mitä tein
 |  | 4 | korttien raahaustoiminto
 |  | 1 | käyttöohjetta, arkkitehtuuria
 6.5 | 4.5 | käyttöliittymään pelin lopetus, highscoren lisäys
-yht. | 43.5 |
+9.5 | 1 | testejä
+|  | 0.5 | tietokannan luominen ohjelman sisältä
+yht. | 45 |
