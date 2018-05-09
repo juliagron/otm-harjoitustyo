@@ -543,9 +543,9 @@ public class PasianssiUi extends Application {
                         String string = i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec + "\n";
                         high = high + string;
                     }
-                    Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.CANCEL);
+                    Alert alert = new Alert(Alert.AlertType.NONE, high,ButtonType.OK, ButtonType.CANCEL);
                     alert.setTitle("High Scores");
-                    alert.showAndWait().isPresent();
+                    alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> menuNew.fire());
                 }
             } else {
                 int min = seconds / 60;
