@@ -33,4 +33,5 @@ päivä | aika | mitä tein
 6.5 | 4.5 | käyttöliittymään pelin lopetus, highscoren lisäys
 9.5 | 1 | testejä
 |  | 0.5 | tietokannan luominen ohjelman sisältä
-yht. | 45 |
+|  | 2 | undo/redo toiminto
+yht. | 47 |
