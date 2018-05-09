@@ -35,7 +35,7 @@ public class UnDoReDo {
     public void unDoMove() {
         if (moved.size() == 1) {
             unDoOneCardMove();
-        } else if (source.isTheStackOnTheTable()) {
+        } else if (source.isTheStackOnTheTable() && target.isTheStackOnTheTable()) {
             unDoTableTableMove();
         } else {
             unDoWasteDeckMove();
@@ -45,7 +45,7 @@ public class UnDoReDo {
     public void reDoMove() {
         if (moved.size() == 1) {
             reDoOneCardMove();
-        } else if (source.isTheStackOnTheTable()) {
+        } else if (source.isTheStackOnTheTable() && target.isTheStackOnTheTable()) {
             reDoTableTableMove();
         } else {
             reDoWasteDeckMove();

@@ -34,4 +34,5 @@ päivä | aika | mitä tein
 9.5 | 1 | testejä
 |  | 0.5 | tietokannan luominen ohjelman sisältä
 |  | 2 | undo/redo toiminto
-yht. | 47 |
+|  | 1 | lisää testejä sekä huomaus että undo toiminto ei toimi kunnolla
+yht. | 48 |
