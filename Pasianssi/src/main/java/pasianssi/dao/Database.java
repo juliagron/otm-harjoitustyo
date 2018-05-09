@@ -9,16 +9,14 @@ package pasianssi.dao;
  *
  * @author juliagro
  */
-
 import java.sql.*;
 import java.util.*;
 
-
 public class Database {
-    
+
     private final Connection connection;
 
-    public Database() throws Exception{
+    public Database() throws Exception {
         this.connection = DriverManager.getConnection("jdbc:sqlite:database.db");
         Statement s = connection.createStatement();
         String st = "CREATE TABLE IF NOT EXISTS HighScore(" + "name varchar(100)," + "time integer);";
@@ -31,7 +29,7 @@ public class Database {
             for (int i = 0; i < params.length; i++) {
                 stmt.setObject(i + 1, params[i]);
             }
-            
+
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     rivit.add(col.collect(rs));
@@ -46,11 +44,11 @@ public class Database {
         try (PreparedStatement stmt = connection.prepareStatement(updateQuery)) {
             for (int i = 0; i < params.length; i++) {
                 stmt.setObject(i + 1, params[i]);
-            }   changes = stmt.executeUpdate();
+            }
+            changes = stmt.executeUpdate();
         }
-        
-        
+
         return changes;
     }
-    
+
 }
