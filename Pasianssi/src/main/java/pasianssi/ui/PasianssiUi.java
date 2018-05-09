@@ -49,6 +49,7 @@ import pasianssi.domain.StartingSituation;
 import pasianssi.domain.Card.CardGroup;
 import pasianssi.domain.HighScore;
 import pasianssi.domain.LegalMove;
+import pasianssi.domain.UnDoReDo;
 
 /**
  *
@@ -81,12 +82,14 @@ public class PasianssiUi extends Application {
     private final CardStack table7 = new CardStack(6, 1);
     private List<CardStack> stacks = new ArrayList();
     private final StartingSituation situation = new StartingSituation(deck, waste, endStack1, endStack2, endStack3, endStack4, table1, table2, table3, table4, table5, table6, table7);
-    int drawing = 1;
     private List<Card> inDrag = new ArrayList();
     private LegalMove move = new LegalMove();
     private Database database;
     private HighScoreDao highDao;
-    private MenuItem menuNew = new MenuItem("New Deal");
+    private MenuItem menuNew;
+    private UnDoReDo unre;
+    private MenuItem menuUndo;
+    private MenuItem menuRedo;
 
     public static void main(String[] args) {
         launch(args);
@@ -95,6 +98,7 @@ public class PasianssiUi extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         database = new Database();
+        unre = new UnDoReDo(this);
         highDao = new HighScoreDao(database);
         situation.newDeal();
         game(primaryStage);
@@ -126,7 +130,7 @@ public class PasianssiUi extends Application {
 
         MenuBar menu = new MenuBar();
         Menu game = new Menu("Game");
-        Menu draw = new Menu("Draw");
+        Menu undo = new Menu("Undo/Redo");
         Label highscores = new Label("High scores");
         highscores.setOnMouseClicked(e -> {
             try {
@@ -137,19 +141,23 @@ public class PasianssiUi extends Application {
         });
         Menu high = new Menu();
         high.setGraphic(highscores);
+        
+        menuUndo = new MenuItem("Undo");
+        menuRedo = new MenuItem("Redo");
+        menuUndo.setOnAction(e -> unDoLastMove());
+        menuRedo.setOnAction(e -> reDoJustUnDoneMove());
+
+        menuNew = new MenuItem("New Deal");
         MenuItem menuQuit = new MenuItem("Quit");
         MenuItem menuSame = new MenuItem("Same Deal");
-        MenuItem drawOne = new MenuItem("Draw one");
-        MenuItem drawThree = new MenuItem("Draw three");
-        drawOne.setOnAction(e -> drawing = 1);
-        drawThree.setOnAction(e -> drawing = 3);
+        
         menuQuit.setOnAction(e -> Platform.exit());
         menuNew.setOnAction(e -> restartNew(primaryStage, borderPane));
         menuSame.setOnAction(e -> restartSame(primaryStage, borderPane));
 
         game.getItems().addAll(menuNew, menuSame, menuQuit);
-        draw.getItems().addAll(drawOne, drawThree);
-        menu.getMenus().addAll(game, draw, high);
+        undo.getItems().addAll(menuUndo, menuRedo);
+        menu.getMenus().addAll(game, undo, high);
 
         borderPane.setTop(menu);
         borderPane.setBottom(timeBar);
@@ -210,25 +218,8 @@ public class PasianssiUi extends Application {
         CardGroup group = new CardGroup(card);
         if (card.getStack().getLocationY() == 0) {
             if (card.getStack().getLocationX() == 1) {
-                if (drawing == 1) {
-                    group.setLayoutX(0);
-                    group.setLayoutY(0);
-                } else if (drawing == 3) {
-                    group.setLayoutY(0);
-                    switch (card.getStack().cards().indexOf(card) % 3) {
-                        case 0:
-                            group.setLayoutX(0);
-                            break;
-                        case 1:
-                            group.setLayoutX(SEPARATION / 2);
-                            break;
-                        case 2:
-                            group.setLayoutX(SEPARATION);
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                group.setLayoutX(0);
+                group.setLayoutY(0);
             } else {
                 group.setLayoutY(0);
             }
@@ -341,12 +332,13 @@ public class PasianssiUi extends Application {
             //return all the cards to the deck
             List<Card> copy = new ArrayList();
             copy.addAll(stacks.get(1).cards());
+            unre.storingTheMove(stacks.get(1), stacks.get(0), copy);
             for (int i = copy.size() - 1; i >= 0; i--) {
                 copy.get(i).setTheCardFaceUp(false);
                 stacks.get(1).cards().remove(copy.get(i));
                 stacks.get(0).cards().add(copy.get(i));
             }
-        } else if (drawing == 1) {
+        } else {
             //draw 1
             Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
             c.getGroup().getChildren().clear();
@@ -355,54 +347,8 @@ public class PasianssiUi extends Application {
             CardGroup cardGroup = new CardGroup(c);
             stacks.get(1).cards().add(c);
             c.setStack(stacks.get(1));
-        } else if (drawing == 3) {
-            //draw 3
-            if (stacks.get(0).cards().size() % 3 == 0) {
-                Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
-                Card ca = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 2);
-                Card car = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 3);
-                c.getGroup().getChildren().clear();
-                ca.getGroup().getChildren().clear();
-                car.getGroup().getChildren().clear();
-                stacks.get(0).cards().remove(c);
-                stacks.get(0).cards().remove(ca);
-                stacks.get(0).cards().remove(car);
-                c.setTheCardFaceUp(true);
-                ca.setTheCardFaceUp(true);
-                car.setTheCardFaceUp(true);
-                CardGroup cardGroup = new CardGroup(c);
-                CardGroup cardGroup1 = new CardGroup(ca);
-                CardGroup cardGroup2 = new CardGroup(car);
-                stacks.get(1).cards().add(c);
-                stacks.get(1).cards().add(ca);
-                stacks.get(1).cards().add(car);
-                c.setStack(stacks.get(1));
-                ca.setStack(stacks.get(1));
-                car.setStack(stacks.get(1));
-            } else if (stacks.get(1).cards().size() % 3 == 1) {
-                Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
-                Card ca = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 2);
-                c.getGroup().getChildren().clear();
-                ca.getGroup().getChildren().clear();
-                stacks.get(0).cards().remove(c);
-                stacks.get(0).cards().remove(ca);
-                c.setTheCardFaceUp(true);
-                ca.setTheCardFaceUp(true);
-                CardGroup cardGroup = new CardGroup(c);
-                CardGroup cardGroup1 = new CardGroup(ca);
-                stacks.get(1).cards().add(c);
-                stacks.get(1).cards().add(ca);
-                c.setStack(stacks.get(1));
-                ca.setStack(stacks.get(1));
-            } else if (stacks.get(1).cards().size() % 3 == 2) {
-                Card c = stacks.get(0).cards().get(stacks.get(0).sizeOfTheStack() - 1);
-                c.getGroup().getChildren().clear();
-                stacks.get(0).cards().remove(c);
-                c.setTheCardFaceUp(true);
-                CardGroup cardGroup = new CardGroup(c);
-                stacks.get(1).cards().add(c);
-                c.setStack(stacks.get(1));
-            }
+            List<Card> list = Arrays.asList(c);
+            unre.storingTheMove(stacks.get(0), stacks.get(1), list);
         }
         reDrawStack(stacks.get(0));
         reDrawStack(stacks.get(1));
@@ -446,6 +392,7 @@ public class PasianssiUi extends Application {
         }
 
         CardStack sourceStack = list.get(0).getStack();
+        unre.storingTheMove(sourceStack, targetStack, list);
         list.stream().map((card) -> {
             sourceStack.removeCardFromTheStack(card);
             return card;
@@ -626,6 +573,28 @@ public class PasianssiUi extends Application {
         Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.CANCEL);
         alert.setTitle("High Scores");
         alert.showAndWait().isPresent();
+    }
+    
+    public void unDoLastMove() {
+        CardStack source = unre.getSourceStack();
+        CardStack target = unre.getTargetStack();
+        List<Card> moved = unre.getMovedCards();
+        if (moved.get(0).getStack() == target) {
+            unre.unDoMove();
+            reDrawStack(source);
+            reDrawStack(target);
+        }
+    }
+
+    public void reDoJustUnDoneMove() {
+        CardStack source = unre.getSourceStack();
+        CardStack target = unre.getTargetStack();
+        List<Card> moved = unre.getMovedCards();
+        if (moved.get(0).getStack() == source) {
+            unre.reDoMove();
+            reDrawStack(source);
+            reDrawStack(target);
+        }
     }
 
     @Override
