@@ -81,6 +81,7 @@ public class StartingSituationTest {
     //
     // @Test
     // public void hello() {}
+    /*
     @Test
     public void gettingListOfCards() {
         assertEquals(52, cards.size());
@@ -101,4 +102,5 @@ public class StartingSituationTest {
         situation.newDeal();
         assertThat(temp, IsNot.not(IsEqual.equalTo(cards)));
     }
+*/
 }
