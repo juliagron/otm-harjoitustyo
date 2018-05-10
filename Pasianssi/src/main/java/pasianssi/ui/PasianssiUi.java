@@ -87,7 +87,10 @@ public class PasianssiUi extends Application {
     private HighScoreDao highDao;
     private MenuItem menuNew;
     
-
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         launch(args);
     }
@@ -101,6 +104,10 @@ public class PasianssiUi extends Application {
 
     }
 
+    /**
+     * Metodi, joka luo pelin aloitustilanteen eli sijoittaa komponentit oikeille paikoilleen
+     * @param primaryStage  start-metodin Stage-parametri, joka sisältää ikkunan näkymän
+     */
     public void game(Stage primaryStage) {
         primaryStage.setTitle("Solitaire");
 
@@ -177,18 +184,32 @@ public class PasianssiUi extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Metodi aloittaa uuden pelin, jossa kortit sekoitetaan
+     * @param stage start-metodin Stage-parametri, jok sisältää ikkunan näkymän
+     * @param borderPane    game-metodin luoma olio, joka vastaa näkymän komponenttien asettelusta
+     */
     public void restartNew(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
         situation.newDeal();
         game(stage);
     }
 
+    /**
+     * Metodi, joka aloittaa uuden pelin, jossa kortit ovat samassa järjestyksessä kuin edellisessä pelissä
+     * @param stage start-metodin Stage-parametri, jok sisältää ikkunan näkymän
+     * @param borderPane    game-metodin luoma olio, joka vastaa näkymän komponenttien asettelusta
+     */
     public void restartSame(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
         situation.sameDeal();
         game(stage);
     }
 
+    /**
+     *  Metodi tyhjentää näkymän komponenteista ja aloittaa kellon alusta
+     * @param borderPane    näkymästä vastaava olio
+     */
     public void cleanup(BorderPane borderPane) {
         borderPane.getChildren().clear();
         timer.cancel();
@@ -196,6 +217,10 @@ public class PasianssiUi extends Application {
         seconds = 0;
     }
 
+    /**
+     *  Metodi vastaa aloitustilanteen piirtämisestä
+     * @param group näkymän keskellä sijaitseva olio, johon korttipinot sijoitetaan
+     */
     public void drawStartingSituation(Group group) {
         stacks = situation.getListOfAllStacks();
         stacks.stream().forEach((stack) -> {
@@ -203,6 +228,10 @@ public class PasianssiUi extends Application {
         });
     }
 
+    /**
+     * Metodi yhden kortin piirtämiseen kortin arvon, värin ja sijainnin mukaan
+     * @param card  piirrettävä kortti
+     */
     public void drawCard(Card card) {
         Rectangle rec = new Rectangle();
         CardGroup group = new CardGroup(card);
@@ -259,6 +288,10 @@ public class PasianssiUi extends Application {
 
     }
 
+    /**
+     * Metodi, joka piirtää tyhjän pinon
+     * @param group olio, jossa sijaitsee yksi korttipino
+     */
     public void drawEmpty(Group group) {
         Rectangle rec = new Rectangle();
         rec.setWidth(WIDTH);
@@ -271,6 +304,11 @@ public class PasianssiUi extends Application {
 
     }
 
+    /**
+     * Metodi yhden korttipinon piirtämiseen
+     * @param group olio, jossa sijaitsee yksi pino kortteineen
+     * @param stack piirrettävä korttipino
+     */
     public void drawStack(Group group, CardStack stack) {
         Group group1 = new Group();
         List<Card> cards = stack.cards();
@@ -300,6 +338,10 @@ public class PasianssiUi extends Application {
 
     }
 
+    /**
+     * Metodi, joka piirtää korttipinon uudelleen, kun kortteja on siirretty pinosta toiseen
+     * @param stack uudelleenpiirrettävä korttipino
+     */
     public void reDrawStack(CardStack stack) {
         Group group = stack.getGroup();
         if (stack.isTheStackOnTheTable() && !"1".equals(stack.sizeOfTheStack())) {
@@ -317,6 +359,9 @@ public class PasianssiUi extends Application {
         stack.getGroup().toBack();
     }
 
+    /**
+     * Metodi, joka määrittelee miten kortteja siirretään käsipakasta sen viereen, kun käsipakkaa klikataan hiirellä, piirtää molemmat pakat uudelleen
+     */
     public void clickingTheDeck() {
         if (stacks.get(0).sizeOfTheStack() == 0) {
             //return all the cards to the deck
@@ -343,12 +388,26 @@ public class PasianssiUi extends Application {
 
     }
     
+    /**
+     * Luokka hiiren paikan määrittamiseen ikkunassa
+     */
     public static class MouseLocation {
 
+        /**
+         *Paramatri, joka määrittää hiiren x-koordinaatin
+         */
         public double x;
+
+        /**
+         * Parametri, joka määrittää hiiren y-koordinaatit
+         */
         public double y;
     }
     
+    /**
+     * Metodi kuuntelee 'pudotetaanko' pinon päälle kortteja ja siirtää ne, jos siirto on laillinen
+     * @param stack pino, jonka täälle voi 'pudottaa' kortteja
+     */
     public void makeTarget(CardStack stack) {
         Group source = stack.getGroup();
         source.setOnMouseDragReleased((final MouseDragEvent e) -> {
@@ -374,6 +433,12 @@ public class PasianssiUi extends Application {
         });
     }
     
+    /**
+     * Metodi, joka siirtää annetun listan kortit kohdepinoon ja piirtää pinot uudelleen
+     * @param list  lista siirrettävistä korteista
+     * @param targetStack   pino, johon kortteja ollaan siirtämässä
+     * @throws SQLException
+     */
     public void moveCards(List<Card> list, CardStack targetStack) throws SQLException {
         if (list.isEmpty()) {
             return;
@@ -400,6 +465,12 @@ public class PasianssiUi extends Application {
         checkFinish();
     }
     
+    /**
+     * Metodi vastaa kortin siirtämisestä lopetuspinoon, käytetään vain tapauksessa, jossa korttia on klikattu kahdesti
+     * @param card  siirrettävä kortti
+     * @return  true, jos siirto onnistui, muuten false
+     * @throws SQLException
+     */
     public boolean moveToEndStack(Card card) throws SQLException {
         List<Card> toPut = Arrays.asList(card);
         for (CardStack stack : stacks) {
@@ -413,6 +484,10 @@ public class PasianssiUi extends Application {
         return false;
     }
     
+    /**
+     * Metodi vastaa korttien siirtämisestä, raahamalla tai klikkaamalla, pinosta toiseen, muuttaa kursorin kuvaa, jos se menee kortin päälle
+     * @param card  kortti, jota voi siirtää
+     */
     public void makeDraggable(Card card) {
         final MouseLocation lastLoc = new MouseLocation();
         CardGroup source = card.getGroup();
@@ -482,6 +557,10 @@ public class PasianssiUi extends Application {
         }
     }
     
+    /**
+     * Metodi tarkistaa onko peli loppu eli onko kaikki kortit lopetuspinoissa, tallentaa pelin tuloksen, jos se sijoittuu viiden parhaan kärkeen
+     * @throws SQLException
+     */
     public void checkFinish() throws SQLException {
         boolean endsFull = true;
         for (CardStack stack : stacks) {
@@ -545,6 +624,10 @@ public class PasianssiUi extends Application {
         }
     }
     
+    /**
+     * Metodi näyttää tuloksista viisi parasta, tai kaikki jos niitä on alle viisi
+     * @throws SQLException
+     */
     public void showScores() throws SQLException {
         List<HighScore> newScores = new ArrayList();
         if (highDao.howManyScores() < 5) {
