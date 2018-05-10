@@ -49,7 +49,6 @@ import pasianssi.domain.StartingSituation;
 import pasianssi.domain.Card.CardGroup;
 import pasianssi.domain.HighScore;
 import pasianssi.domain.LegalMove;
-import pasianssi.domain.UnDoReDo;
 
 /**
  *
@@ -87,7 +86,6 @@ public class PasianssiUi extends Application {
     private Database database;
     private HighScoreDao highDao;
     private MenuItem menuNew;
-    private UnDoReDo unre;
     
 
     public static void main(String[] args) {
@@ -97,7 +95,6 @@ public class PasianssiUi extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         database = new Database();
-        unre = new UnDoReDo(this);
         highDao = new HighScoreDao(database);
         situation.newDeal();
         game(primaryStage);
@@ -129,7 +126,7 @@ public class PasianssiUi extends Application {
 
         MenuBar menu = new MenuBar();
         Menu game = new Menu("Game");
-        Menu undo = new Menu("Undo/Redo");
+        
         Label highscores = new Label("High scores");
         highscores.setOnMouseClicked(e -> {
             try {
@@ -140,11 +137,6 @@ public class PasianssiUi extends Application {
         });
         Menu high = new Menu();
         high.setGraphic(highscores);
-        
-        MenuItem menuUndo = new MenuItem("Undo");
-        MenuItem menuRedo = new MenuItem("Redo");
-        menuUndo.setOnAction(e -> unDoLastMove());
-        menuRedo.setOnAction(e -> reDoJustUnDoneMove());
 
         menuNew = new MenuItem("New Deal");
         MenuItem menuQuit = new MenuItem("Quit");
@@ -155,8 +147,7 @@ public class PasianssiUi extends Application {
         menuSame.setOnAction(e -> restartSame(primaryStage, borderPane));
 
         game.getItems().addAll(menuNew, menuSame, menuQuit);
-        undo.getItems().addAll(menuUndo, menuRedo);
-        menu.getMenus().addAll(game, undo, high);
+        menu.getMenus().addAll(game, high);
 
         borderPane.setTop(menu);
         borderPane.setBottom(timeBar);
@@ -331,7 +322,6 @@ public class PasianssiUi extends Application {
             //return all the cards to the deck
             List<Card> copy = new ArrayList();
             copy.addAll(stacks.get(1).cards());
-            unre.storingTheMove(stacks.get(1), stacks.get(0), copy);
             for (int i = copy.size() - 1; i >= 0; i--) {
                 copy.get(i).setTheCardFaceUp(false);
                 stacks.get(1).cards().remove(copy.get(i));
@@ -347,7 +337,6 @@ public class PasianssiUi extends Application {
             stacks.get(1).cards().add(c);
             c.setStack(stacks.get(1));
             List<Card> list = Arrays.asList(c);
-            unre.storingTheMove(stacks.get(0), stacks.get(1), list);
         }
         reDrawStack(stacks.get(0));
         reDrawStack(stacks.get(1));
@@ -391,7 +380,6 @@ public class PasianssiUi extends Application {
         }
 
         CardStack sourceStack = list.get(0).getStack();
-        unre.storingTheMove(sourceStack, targetStack, list);
         list.stream().map((card) -> {
             sourceStack.removeCardFromTheStack(card);
             return card;
@@ -574,27 +562,6 @@ public class PasianssiUi extends Application {
         alert.showAndWait().isPresent();
     }
     
-    public void unDoLastMove() {
-        CardStack source = unre.getSourceStack();
-        CardStack target = unre.getTargetStack();
-        List<Card> moved = unre.getMovedCards();
-        if (moved.get(0).getStack() == target) {
-            unre.unDoMove();
-            reDrawStack(source);
-            reDrawStack(target);
-        }
-    }
-
-    public void reDoJustUnDoneMove() {
-        CardStack source = unre.getSourceStack();
-        CardStack target = unre.getTargetStack();
-        List<Card> moved = unre.getMovedCards();
-        if (moved.get(0).getStack() == source) {
-            unre.reDoMove();
-            reDrawStack(source);
-            reDrawStack(target);
-        }
-    }
 
     @Override
     public void stop() throws Exception {
