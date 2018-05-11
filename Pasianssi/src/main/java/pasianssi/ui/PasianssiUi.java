@@ -51,7 +51,7 @@ import pasianssi.domain.HighScore;
 import pasianssi.domain.LegalMove;
 
 /**
- *
+ * Ohjelman pääluokka, joka tekee käyttöliittymän
  * @author juliagro
  */
 public class PasianssiUi extends Application {
