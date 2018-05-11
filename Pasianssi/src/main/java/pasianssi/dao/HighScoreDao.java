@@ -11,6 +11,7 @@ import java.util.List;
 import pasianssi.domain.HighScore;
 
 /**
+ * Luokka HighScore-tietojen tallennukseen
  * @author juliagro
  */
 public class HighScoreDao implements Dao<HighScore, Integer> {

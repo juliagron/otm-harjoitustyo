@@ -5,17 +5,22 @@
  */
 package pasianssi.dao;
 
-/**
- *
- * @author juliagro
- */
-
 import pasianssi.domain.HighScore;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Luokka tiedon keräämiseen SQL-lauseesta
+ * @author juliagro
+ */
 public class HighScoreCollector implements Collector<HighScore> {
 
+    /**
+     *  Metodi kerää tietokannasta ResultSetin määrittämät tiedot ja luo niiden perusteella uuden HighScoren
+     * @param rs    tietokannasta kerätyt tiedot
+     * @return  uuden HighScoren
+     * @throws SQLException
+     */
     @Override
     public HighScore collect(ResultSet rs) throws SQLException {
         return new HighScore(rs.getString("name"), rs.getInt("time"));

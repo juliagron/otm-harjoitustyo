@@ -5,17 +5,21 @@
  */
 package pasianssi.dao;
 
-/**
- *
- * @author juliagro
- */
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Luokka tiedon tallentamiseen tietokantaan
+ * @author juliagro
+ */
 public class Database {
 
     private final Connection connection;
 
+    /**
+     * Luokan Database konstruktori, joka luo tietokannan ja sen ainoan taulun, jos ne eivät ole olemassa
+     * @throws Exception
+     */
     public Database() throws Exception {
         this.connection = DriverManager.getConnection("jdbc:sqlite:database.db");
         Statement s = connection.createStatement();
@@ -23,6 +27,15 @@ public class Database {
         s.executeUpdate(st);
     }
 
+    /**
+     * Metodi tietojen keräämiseen tietokannasta
+     * @param <T>   tiedonkerääjän määrittävä elementti
+     * @param query SQL-lause, jota yritetään suorittaa
+     * @param col   tiedonkerääjä
+     * @param params    SQL-lauseessa olevat parametrit
+     * @return  listan tietokannasta SQL-lauseen mukaisesti kerätyistä riveistä
+     * @throws SQLException
+     */
     public <T> List<T> queryAndCollect(String query, Collector<T> col, Object... params) throws SQLException {
         List<T> rivit = new ArrayList<>();
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -39,6 +52,13 @@ public class Database {
         return rivit;
     }
 
+    /**
+     * Metodi tietokannan päivittämiseen
+     * @param updateQuery   SQL-lause, joka määrää miten tietokantaa päivitetään
+     * @param params    SQL-lauseessa olevat parametrit
+     * @return
+     * @throws SQLException
+     */
     public int update(String updateQuery, Object... params) throws SQLException {
         int changes;
         try (PreparedStatement stmt = connection.prepareStatement(updateQuery)) {
