@@ -8,23 +8,22 @@ Sovelluksella on vain yksi käyttäjärooli, pelaaja.
 
 ## Toiminnallisuus
 - sovellukseen ei tarvitse kirjautua
-- kortteja voi pakasta ottaa kerrallaan yhden tai kolme
-  - käyttäjä voi valita
-  - korttien järjestys pakassa satunnainen
+- korttien järjestys pakassa satunnainen
 - sovellus pitää kirjaa kuluneesta ajasta
 - saman pelin voi aloittaa uudestaan (kortit samassa järjestyksessä)
 - voi aloittaa uuden pelin
-- undo-toiminto
-- pisteytys pääasiallisesti kuluneen ajan mukaan
+- kortit voi nappia painamalla siirtää lopetuspinoihin, jos ne kaikki ovat pöydällä oikeinpäin
+- pisteytys kuluneen ajan mukaan
 - parhaat pisteet tallennetaan nimellä
 
 ## Perusversio
 - sisältää ajan
 - pakan pystyy käymään läpi
-- käännettävien korttien määrän voi valita
 
 ## Jatkokehitysideoita
-Perusversion lisäksi sovellukseen voi lisätä seuraavia asioita
+Normaalin toiminnallisuuden lisäksi sovellukseen voi lisätä seuraavia asioita
 - grafiikan parantelu
 - käyttäjä saa valita grafiikan
+- käännettävien korttien määrän voi valita
+- undo-toiminto
 - eri pasiansseja
