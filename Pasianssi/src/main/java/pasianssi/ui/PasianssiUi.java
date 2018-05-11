@@ -133,7 +133,14 @@ public class PasianssiUi extends Application {
 
         MenuBar menu = new MenuBar();
         Menu game = new Menu("Game");
-        
+        Label allUp = new Label("All up");
+        allUp.setOnMouseClicked( e -> {
+            try {
+                allUp();
+            } catch (SQLException ex) {
+                Logger.getLogger(PasianssiUi.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
         Label highscores = new Label("High scores");
         highscores.setOnMouseClicked(e -> {
             try {
@@ -144,6 +151,9 @@ public class PasianssiUi extends Application {
         });
         Menu high = new Menu();
         high.setGraphic(highscores);
+        
+        Menu allup = new Menu();
+        allup.setGraphic(allUp);
 
         menuNew = new MenuItem("New Deal");
         MenuItem menuQuit = new MenuItem("Quit");
@@ -154,7 +164,7 @@ public class PasianssiUi extends Application {
         menuSame.setOnAction(e -> restartSame(primaryStage, borderPane));
 
         game.getItems().addAll(menuNew, menuSame, menuQuit);
-        menu.getMenus().addAll(game, high);
+        menu.getMenus().addAll(game, allup, high);
 
         borderPane.setTop(menu);
         borderPane.setBottom(timeBar);
@@ -643,6 +653,41 @@ public class PasianssiUi extends Application {
         Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.CANCEL);
         alert.setTitle("High Scores");
         alert.showAndWait().isPresent();
+    }
+    
+    /**
+     * Metodi katsoo onko kaikki kortit pöydällä ja oikein päin, jos ne ovat siirtää metodi kaikki kortit oikeisiin lopetuspinoihin
+     * @throws SQLException
+     */
+    public void allUp() throws SQLException {
+        boolean canBeTurned = true;
+        if (stacks.get(0).sizeOfTheStack() == 0 && stacks.get(1).sizeOfTheStack() == 0) {
+            for (CardStack stack: stacks) {
+                if (stack.isTheStackOnTheTable()) {
+                    for (Card card: stack.cards()) {
+                        if (!card.isTheCardFaceUp()) {
+                            canBeTurned = false;
+                        }
+                    }
+                }
+            }
+        }
+        if (canBeTurned) {
+            boolean moving = false;
+            do {
+                moving = false;
+                for (CardStack stack: stacks) {
+                    if (stack.isTheStackOnTheTable()) {
+                        if (stack.sizeOfTheStack() != 0) {
+                            Card card = stack.topCard();
+                            if (moveToEndStack(card)) {
+                                moving = true;
+                            }
+                        }
+                    }
+                }
+            } while (moving);
+        }
     }
     
 
