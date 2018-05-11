@@ -11,6 +11,8 @@ Harjoitustyö kurssille Ohjelmistotekniikan menetelmät. Työn tarkoituksena on 
 
 [Käyttöohje](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kayttoohje.md)
 
+[Testausdokumentti](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/testaus.md)
+
 ## Releaset
 
 [Viikko 5](https://github.com/juliagron/otm-harjoitustyo/releases/tag/viikko5)
