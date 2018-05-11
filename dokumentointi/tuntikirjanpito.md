@@ -35,6 +35,7 @@ päivä | aika | mitä tein
 |  | 0.5 | tietokannan luominen ohjelman sisältä
 |  | 2 | undo/redo toiminto
 |  | 1 | lisää testejä sekä huomaus että undo toiminto ei toimi kunnolla
-19.5 | 1 | javadoc
+10.5 | 1 | javadoc
 |  | 2 | testejä, undo-toiminnon poisto
-yht. | 51 |
+11.5 | 0.5 | javadoc
+yht. | 51.5 |
