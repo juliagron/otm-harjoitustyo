@@ -695,7 +695,13 @@ public class PasianssiUi extends Application {
             high = high + text;
         } else {
             for (int i = 0; i < newScores.size(); i++) {
-                String score = i + 1 + ". " + newScores.get(i).getName() + "    " + newScores.get(i).getTime() / 60 + ":" + newScores.get(i).getTime() % 60 + "\n";
+                int sec = newScores.get(i).getTime() % 60;
+                String score = "";
+                if (sec < 10) {
+                    score = i + 1 + ". " + newScores.get(i).getName() + "    " + newScores.get(i).getTime() / 60 + ":0" + sec + "\n";
+                } else {
+                    score = i + 1 + ". " + newScores.get(i).getName() + "    " + newScores.get(i).getTime() / 60 + ":" + sec + "\n";
+                }
                 high = high + score;
             }
         }
