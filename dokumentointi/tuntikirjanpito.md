@@ -37,5 +37,5 @@ päivä | aika | mitä tein
 |  | 1 | lisää testejä sekä huomaus että undo toiminto ei toimi kunnolla
 10.5 | 1 | javadoc
 |  | 2 | testejä, undo-toiminnon poisto
-11.5 | 0.5 | javadoc
-yht. | 51.5 |
+11.5 | 1.5 | javadoc
+yht. | 52.5 |
