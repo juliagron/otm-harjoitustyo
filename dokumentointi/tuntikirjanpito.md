@@ -39,4 +39,5 @@ päivä | aika | mitä tein
 |  | 2 | testejä, undo-toiminnon poisto
 11.5 | 1.5 | javadoc
 |  | 0.5 | käyttöliittymää
-yht. | 53 |
+|  | 3 | dokumentointia
+yht. | 56 |
