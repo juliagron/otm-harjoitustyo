@@ -52,6 +52,7 @@ import pasianssi.domain.LegalMove;
 
 /**
  * Ohjelman pääluokka, joka tekee käyttöliittymän
+ *
  * @author juliagro
  */
 public class PasianssiUi extends Application {
@@ -86,9 +87,9 @@ public class PasianssiUi extends Application {
     private Database database;
     private HighScoreDao highDao;
     private MenuItem menuNew;
-    
+
     /**
-     * 
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -105,8 +106,11 @@ public class PasianssiUi extends Application {
     }
 
     /**
-     * Metodi, joka luo pelin aloitustilanteen eli sijoittaa komponentit oikeille paikoilleen
-     * @param primaryStage  start-metodin Stage-parametri, joka sisältää ikkunan näkymän
+     * Metodi, joka luo pelin aloitustilanteen eli sijoittaa komponentit
+     * oikeille paikoilleen
+     *
+     * @param primaryStage start-metodin Stage-parametri, joka sisältää ikkunan
+     * näkymän
      */
     public void game(Stage primaryStage) {
         primaryStage.setTitle("Solitaire");
@@ -134,7 +138,7 @@ public class PasianssiUi extends Application {
         MenuBar menu = new MenuBar();
         Menu game = new Menu("Game");
         Label allUp = new Label("All up");
-        allUp.setOnMouseClicked( e -> {
+        allUp.setOnMouseClicked(e -> {
             try {
                 allUp();
             } catch (SQLException ex) {
@@ -151,14 +155,14 @@ public class PasianssiUi extends Application {
         });
         Menu high = new Menu();
         high.setGraphic(highscores);
-        
+
         Menu allup = new Menu();
         allup.setGraphic(allUp);
 
         menuNew = new MenuItem("New Deal");
         MenuItem menuQuit = new MenuItem("Quit");
         MenuItem menuSame = new MenuItem("Same Deal");
-        
+
         menuQuit.setOnAction(e -> Platform.exit());
         menuNew.setOnAction(e -> restartNew(primaryStage, borderPane));
         menuSame.setOnAction(e -> restartSame(primaryStage, borderPane));
@@ -196,8 +200,10 @@ public class PasianssiUi extends Application {
 
     /**
      * Metodi aloittaa uuden pelin, jossa kortit sekoitetaan
+     *
      * @param stage start-metodin Stage-parametri, jok sisältää ikkunan näkymän
-     * @param borderPane    game-metodin luoma olio, joka vastaa näkymän komponenttien asettelusta
+     * @param borderPane game-metodin luoma olio, joka vastaa näkymän
+     * komponenttien asettelusta
      */
     public void restartNew(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
@@ -206,9 +212,12 @@ public class PasianssiUi extends Application {
     }
 
     /**
-     * Metodi, joka aloittaa uuden pelin, jossa kortit ovat samassa järjestyksessä kuin edellisessä pelissä
+     * Metodi, joka aloittaa uuden pelin, jossa kortit ovat samassa
+     * järjestyksessä kuin edellisessä pelissä
+     *
      * @param stage start-metodin Stage-parametri, jok sisältää ikkunan näkymän
-     * @param borderPane    game-metodin luoma olio, joka vastaa näkymän komponenttien asettelusta
+     * @param borderPane game-metodin luoma olio, joka vastaa näkymän
+     * komponenttien asettelusta
      */
     public void restartSame(Stage stage, BorderPane borderPane) {
         cleanup(borderPane);
@@ -217,8 +226,9 @@ public class PasianssiUi extends Application {
     }
 
     /**
-     *  Metodi tyhjentää näkymän komponenteista ja aloittaa kellon alusta
-     * @param borderPane    näkymästä vastaava olio
+     * Metodi tyhjentää näkymän komponenteista ja aloittaa kellon alusta
+     *
+     * @param borderPane näkymästä vastaava olio
      */
     public void cleanup(BorderPane borderPane) {
         borderPane.getChildren().clear();
@@ -228,8 +238,10 @@ public class PasianssiUi extends Application {
     }
 
     /**
-     *  Metodi vastaa aloitustilanteen piirtämisestä
-     * @param group näkymän keskellä sijaitseva olio, johon korttipinot sijoitetaan
+     * Metodi vastaa aloitustilanteen piirtämisestä
+     *
+     * @param group näkymän keskellä sijaitseva olio, johon korttipinot
+     * sijoitetaan
      */
     public void drawStartingSituation(Group group) {
         stacks = situation.getListOfAllStacks();
@@ -240,7 +252,8 @@ public class PasianssiUi extends Application {
 
     /**
      * Metodi yhden kortin piirtämiseen kortin arvon, värin ja sijainnin mukaan
-     * @param card  piirrettävä kortti
+     *
+     * @param card piirrettävä kortti
      */
     public void drawCard(Card card) {
         Rectangle rec = new Rectangle();
@@ -300,6 +313,7 @@ public class PasianssiUi extends Application {
 
     /**
      * Metodi, joka piirtää tyhjän pinon
+     *
      * @param group olio, jossa sijaitsee yksi korttipino
      */
     public void drawEmpty(Group group) {
@@ -316,6 +330,7 @@ public class PasianssiUi extends Application {
 
     /**
      * Metodi yhden korttipinon piirtämiseen
+     *
      * @param group olio, jossa sijaitsee yksi pino kortteineen
      * @param stack piirrettävä korttipino
      */
@@ -349,7 +364,9 @@ public class PasianssiUi extends Application {
     }
 
     /**
-     * Metodi, joka piirtää korttipinon uudelleen, kun kortteja on siirretty pinosta toiseen
+     * Metodi, joka piirtää korttipinon uudelleen, kun kortteja on siirretty
+     * pinosta toiseen
+     *
      * @param stack uudelleenpiirrettävä korttipino
      */
     public void reDrawStack(CardStack stack) {
@@ -370,7 +387,9 @@ public class PasianssiUi extends Application {
     }
 
     /**
-     * Metodi, joka määrittelee miten kortteja siirretään käsipakasta sen viereen, kun käsipakkaa klikataan hiirellä, piirtää molemmat pakat uudelleen
+     * Metodi, joka määrittelee miten kortteja siirretään käsipakasta sen
+     * viereen, kun käsipakkaa klikataan hiirellä, piirtää molemmat pakat
+     * uudelleen
      */
     public void clickingTheDeck() {
         if (stacks.get(0).sizeOfTheStack() == 0) {
@@ -397,14 +416,14 @@ public class PasianssiUi extends Application {
         reDrawStack(stacks.get(1));
 
     }
-    
+
     /**
      * Luokka hiiren paikan määrittamiseen ikkunassa
      */
     public static class MouseLocation {
 
         /**
-         *Paramatri, joka määrittää hiiren x-koordinaatin
+         * Paramatri, joka määrittää hiiren x-koordinaatin
          */
         public double x;
 
@@ -413,9 +432,11 @@ public class PasianssiUi extends Application {
          */
         public double y;
     }
-    
+
     /**
-     * Metodi kuuntelee 'pudotetaanko' pinon päälle kortteja ja siirtää ne, jos siirto on laillinen
+     * Metodi kuuntelee 'pudotetaanko' pinon päälle kortteja ja siirtää ne, jos
+     * siirto on laillinen
+     *
      * @param stack pino, jonka täälle voi 'pudottaa' kortteja
      */
     public void makeTarget(CardStack stack) {
@@ -442,11 +463,13 @@ public class PasianssiUi extends Application {
             }
         });
     }
-    
+
     /**
-     * Metodi, joka siirtää annetun listan kortit kohdepinoon ja piirtää pinot uudelleen
-     * @param list  lista siirrettävistä korteista
-     * @param targetStack   pino, johon kortteja ollaan siirtämässä
+     * Metodi, joka siirtää annetun listan kortit kohdepinoon ja piirtää pinot
+     * uudelleen
+     *
+     * @param list lista siirrettävistä korteista
+     * @param targetStack pino, johon kortteja ollaan siirtämässä
      * @throws SQLException
      */
     public void moveCards(List<Card> list, CardStack targetStack) throws SQLException {
@@ -471,14 +494,16 @@ public class PasianssiUi extends Application {
         });
         reDrawStack(sourceStack);
         reDrawStack(targetStack);
-        
+
         checkFinish();
     }
-    
+
     /**
-     * Metodi vastaa kortin siirtämisestä lopetuspinoon, käytetään vain tapauksessa, jossa korttia on klikattu kahdesti
-     * @param card  siirrettävä kortti
-     * @return  true, jos siirto onnistui, muuten false
+     * Metodi vastaa kortin siirtämisestä lopetuspinoon, käytetään vain
+     * tapauksessa, jossa korttia on klikattu kahdesti
+     *
+     * @param card siirrettävä kortti
+     * @return true, jos siirto onnistui, muuten false
      * @throws SQLException
      */
     public boolean moveToEndStack(Card card) throws SQLException {
@@ -493,10 +518,12 @@ public class PasianssiUi extends Application {
         }
         return false;
     }
-    
+
     /**
-     * Metodi vastaa korttien siirtämisestä, raahamalla tai klikkaamalla, pinosta toiseen, muuttaa kursorin kuvaa, jos se menee kortin päälle
-     * @param card  kortti, jota voi siirtää
+     * Metodi vastaa korttien siirtämisestä, raahamalla tai klikkaamalla,
+     * pinosta toiseen, muuttaa kursorin kuvaa, jos se menee kortin päälle
+     *
+     * @param card kortti, jota voi siirtää
      */
     public void makeDraggable(Card card) {
         final MouseLocation lastLoc = new MouseLocation();
@@ -566,9 +593,11 @@ public class PasianssiUi extends Application {
             });
         }
     }
-    
+
     /**
-     * Metodi tarkistaa onko peli loppu eli onko kaikki kortit lopetuspinoissa, tallentaa pelin tuloksen, jos se sijoittuu viiden parhaan kärkeen
+     * Metodi tarkistaa onko peli loppu eli onko kaikki kortit lopetuspinoissa,
+     * tallentaa pelin tuloksen, jos se sijoittuu viiden parhaan kärkeen
+     *
      * @throws SQLException
      */
     public void checkFinish() throws SQLException {
@@ -620,7 +649,7 @@ public class PasianssiUi extends Application {
                         String string = i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec + "\n";
                         high = high + string;
                     }
-                    Alert alert = new Alert(Alert.AlertType.NONE, high,ButtonType.OK, ButtonType.CANCEL);
+                    Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.OK, ButtonType.CANCEL);
                     alert.setTitle("High Scores");
                     alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> menuNew.fire());
                 }
@@ -633,9 +662,11 @@ public class PasianssiUi extends Application {
 
         }
     }
-    
+
     /**
-     * Metodi näyttää tuloksista viisi parasta, tai kaikki jos niitä on alle viisi
+     * Metodi näyttää tuloksista viisi parasta, tai kaikki jos niitä on alle
+     * viisi
+     *
      * @throws SQLException
      */
     public void showScores() throws SQLException {
@@ -646,25 +677,33 @@ public class PasianssiUi extends Application {
             newScores = highDao.findFive();
         }
         String high = "";
-        for (int i = 0; i < newScores.size(); i++) {
-            String score = i + 1 + ". " + newScores.get(i).getName() + "    " + newScores.get(i).getTime() / 60 + ":" + newScores.get(i).getTime() % 60 + "\n";
-            high = high + score;
+        if (newScores.isEmpty()) {
+            String text = "No highscores";
+            high = high + text;
+        } else {
+            for (int i = 0; i < newScores.size(); i++) {
+                String score = i + 1 + ". " + newScores.get(i).getName() + "    " + newScores.get(i).getTime() / 60 + ":" + newScores.get(i).getTime() % 60 + "\n";
+                high = high + score;
+            }
         }
+
         Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.CANCEL);
         alert.setTitle("High Scores");
         alert.showAndWait().isPresent();
     }
-    
+
     /**
-     * Metodi katsoo onko kaikki kortit pöydällä ja oikein päin, jos ne ovat siirtää metodi kaikki kortit oikeisiin lopetuspinoihin
+     * Metodi katsoo onko kaikki kortit pöydällä ja oikein päin, jos ne ovat
+     * siirtää metodi kaikki kortit oikeisiin lopetuspinoihin
+     *
      * @throws SQLException
      */
     public void allUp() throws SQLException {
         boolean canBeTurned = true;
         if (stacks.get(0).sizeOfTheStack() == 0 && stacks.get(1).sizeOfTheStack() == 0) {
-            for (CardStack stack: stacks) {
+            for (CardStack stack : stacks) {
                 if (stack.isTheStackOnTheTable()) {
-                    for (Card card: stack.cards()) {
+                    for (Card card : stack.cards()) {
                         if (!card.isTheCardFaceUp()) {
                             canBeTurned = false;
                         }
@@ -676,7 +715,7 @@ public class PasianssiUi extends Application {
             boolean moving = false;
             do {
                 moving = false;
-                for (CardStack stack: stacks) {
+                for (CardStack stack : stacks) {
                     if (stack.isTheStackOnTheTable()) {
                         if (stack.sizeOfTheStack() != 0) {
                             Card card = stack.topCard();
@@ -689,7 +728,6 @@ public class PasianssiUi extends Application {
             } while (moving);
         }
     }
-    
 
     @Override
     public void stop() throws Exception {
