@@ -89,7 +89,7 @@ public class PasianssiUi extends Application {
     private MenuItem menuNew;
 
     /**
-     *
+     * Luokan PasianssiUi main-metodi
      * @param args
      */
     public static void main(String[] args) {
@@ -201,7 +201,7 @@ public class PasianssiUi extends Application {
     /**
      * Metodi aloittaa uuden pelin, jossa kortit sekoitetaan
      *
-     * @param stage start-metodin Stage-parametri, jok sisältää ikkunan näkymän
+     * @param stage start-metodin Stage-parametri, joka sisältää ikkunan näkymän
      * @param borderPane game-metodin luoma olio, joka vastaa näkymän
      * komponenttien asettelusta
      */
@@ -215,7 +215,7 @@ public class PasianssiUi extends Application {
      * Metodi, joka aloittaa uuden pelin, jossa kortit ovat samassa
      * järjestyksessä kuin edellisessä pelissä
      *
-     * @param stage start-metodin Stage-parametri, jok sisältää ikkunan näkymän
+     * @param stage start-metodin Stage-parametri, joka sisältää ikkunan näkymän
      * @param borderPane game-metodin luoma olio, joka vastaa näkymän
      * komponenttien asettelusta
      */
@@ -646,8 +646,15 @@ public class PasianssiUi extends Application {
                     for (int i = 0; i < highDao.howManyScores(); i++) {
                         int min = newScores.get(i).getTime() / 60;
                         int sec = newScores.get(i).getTime() % 60;
-                        String string = i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec + "\n";
-                        high = high + string;
+                        String string = "";
+                        if (sec < 10) {
+                            string = i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":0" + sec + "\n";
+                
+                        } else {
+                            string = i + 1 + ".    " + newScores.get(i).getName() + "  " + min + ":" + sec + "\n";
+                
+                        }
+                                high = high + string;
                     }
                     Alert alert = new Alert(Alert.AlertType.NONE, high, ButtonType.OK, ButtonType.CANCEL);
                     alert.setTitle("High Scores");
@@ -656,7 +663,13 @@ public class PasianssiUi extends Application {
             } else {
                 int min = seconds / 60;
                 int sec = seconds % 60;
-                Alert alert = new Alert(Alert.AlertType.NONE, "Your time: " + min + ":" + sec, ButtonType.OK, ButtonType.CANCEL);
+                String score = "";
+                if (sec < 10) {
+                    score = "Your time: " + min + ":0" + sec;
+                } else {
+                    score = "Your time: " + min + ":" + sec;
+                }
+                Alert alert = new Alert(Alert.AlertType.NONE, score, ButtonType.OK, ButtonType.CANCEL);
                 alert.showAndWait().filter(response -> response == ButtonType.OK).ifPresent(response -> menuNew.fire());
             }
 
