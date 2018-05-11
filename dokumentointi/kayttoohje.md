@@ -1,6 +1,6 @@
 # Käyttöohje
 
-Lataa tiedosto [pasianssi.jar](https://github.com/juliagron/otm-harjoitustyo/releases/tag/viikko5)
+Lataa tiedosto [pasianssi.jar](https://github.com/juliagron/otm-harjoitustyo/releases/tag/loppupalautus)
 
 ## Muut tiedostot
 
