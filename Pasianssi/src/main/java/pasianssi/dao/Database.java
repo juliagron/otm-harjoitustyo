@@ -21,7 +21,7 @@ public class Database {
      * @throws Exception
      */
     public Database() throws Exception {
-        this.connection = DriverManager.getConnection("jdbc:sqlite:database.db");
+        this.connection = DriverManager.getConnection("jdbc:sqlite:db.db");
         Statement s = connection.createStatement();
         String st = "CREATE TABLE IF NOT EXISTS HighScore(" + "name varchar(100)," + "time integer);";
         s.executeUpdate(st);

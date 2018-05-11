@@ -20,10 +20,23 @@ Sovelluslogiikan eri luokkien sihde toisiinsa:
 
 ![class/package diagram](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/class_package_diagram.png)
 
+## Tietojen pysyväistallennus
+
+Pakkauksen pasianssi.dao luokat huolehtivat pelin tulosten tallentamisesta tietokantaan.
+
+### Tietokanta
+
+Tietokantaan tallennetaan peliin menneitä aikoja, jos ne ylettävät viiden parhaan tuloksen joukkoon.
+
+Tietokanta sisältää yhen taulun, HighScore, johon tallennetaan nimi ja aika.
+
 ## Päätoiminnallisuudet
 
 #### Pelikorttien laittaminen oikeille paikoille
 
+Pelin aloitustilanteen sovelluslogiikka etenee seuraavan sekvenssikaavion mukaisesti:
+
 ![sequence diagram](https://github.com/juliagron/otm-harjoitustyo/blob/master/dokumentointi/kuvat/sequence_diagram_1.png)
 
+Käyttöliittymä luo kolmetoista korttipinoa oikeilla kordinaateilla. Sen jälkeen luodaan uusi aloitustianne, jolle annetaan äskettäin luodut pinot. Aloitustilanteessa luodaan kaikki 52 korttia. Metodi newDeal sekoittaa kortit ja katsoo, että pinot ovat tyhjiä, kääntää kortit väärinpäin, sijoittaa kortit oikeisiin pinoihin ja kääntää pöydälle olevien päälimmiset oikeinpäin. 
 
